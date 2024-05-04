@@ -6,5 +6,5 @@ Project made with Java 21 and Gradle 8.7
 
 ## Project team:
 
-Grzegorz Dynak - Leader
-Jan Izdebski
+- Grzegorz Dynak - Leader
+- Jan Izdebski
