@@ -1,16 +1,32 @@
 package org.abmmain;
 
-public abstract class ACritter {
+public abstract class ACritter implements Critters {
     protected String name;
-    protected int health;
+    protected int maxHealth;
     protected int hunger;
     protected int thirst;
-    protected float offspringChance;
+    protected double offspringChance;
     protected int age;
-
-    public ACritter(String name, int health, int offspringChance) {
+    static int globalCritterID = 0;
+    int critterID;
+    public ACritter(String name, int maxHealth, double offspringChance) {
         this.name = name;
-        this.health = health;
+        this.maxHealth = maxHealth;
         this.offspringChance = offspringChance;
+        this.hunger = 100;
+        this.age = 0;
+        this.thirst = 100;
+        this.critterID = globalCritterID;
+        critterID++;
+    }
+    public ACritter() {
+        this.name = "N/A";
+        this.maxHealth = 1;
+        this.offspringChance = 0;
+        this.hunger = 100;
+        this.age = 0;
+        this.thirst = 100;
+        this.critterID = globalCritterID;
+        critterID += 1;
     }
 }
