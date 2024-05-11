@@ -1,4 +1,4 @@
-package org.abmmain;
+package org.critters;
 
 public class Deer extends ACritter {
     public void receiveDamage(int dmg) {

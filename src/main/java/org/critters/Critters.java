@@ -1,4 +1,4 @@
-package org.abmmain;
+package org.critters;
 
 public interface Critters {
 //    Reduces an entity's health by dmg amount.

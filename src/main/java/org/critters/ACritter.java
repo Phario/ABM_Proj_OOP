@@ -1,4 +1,4 @@
-package org.abmmain;
+package org.critters;
 
 public abstract class ACritter implements Critters {
     protected String Species;

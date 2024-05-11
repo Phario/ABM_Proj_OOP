@@ -1,16 +1,16 @@
-package org.abmmain;
+package org.critters;
 
-public class Wolf extends ACritter {
+public class Bear extends ACritter {
     public void receiveDamage(int dmg) {
         maxHealth -= dmg;
     }
     public int getStaticID(ACritter ID) {
         return critterID;
     }
-    public Wolf() {
+    public Bear() {
         super("N/A", 0, 0);
     }
-    public Wolf(String species, int maxHealth, double offspringChance) {
+    public Bear(String species, int maxHealth, double offspringChance) {
         super(species, maxHealth, offspringChance);
     }
 }

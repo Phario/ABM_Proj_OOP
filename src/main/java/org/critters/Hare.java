@@ -1,4 +1,4 @@
-package org.abmmain;
+package org.critters;
 
 public class Hare extends ACritter implements Burrower {
     public void receiveDamage(int dmg) {
