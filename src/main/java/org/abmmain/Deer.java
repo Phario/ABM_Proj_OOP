@@ -10,7 +10,7 @@ public class Deer extends ACritter {
     public Deer() {
         super("N/A", 0, 0);
     }
-    public Deer(String name, int maxHealth, double offspringChance) {
-        super(name, maxHealth, offspringChance);
+    public Deer(String species, int maxHealth, double offspringChance) {
+        super(species, maxHealth, offspringChance);
     }
 }
