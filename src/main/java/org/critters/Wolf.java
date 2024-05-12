@@ -8,9 +8,9 @@ public class Wolf extends ACritter {
         return critterID;
     }
     public Wolf() {
-        super("N/A", 0, 0);
+        super("N/A", 0, 0, 0, 0);
     }
-    public Wolf(String species, int maxHealth, double offspringChance) {
-        super(species, maxHealth, offspringChance);
+    public Wolf(String species, int maxHealth, double offspringChance, int x, int y) {
+        super(species, maxHealth, offspringChance, x, y);
     }
 }

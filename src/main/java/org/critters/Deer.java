@@ -8,9 +8,9 @@ public class Deer extends ACritter {
         return critterID;
     }
     public Deer() {
-        super("N/A", 0, 0);
+        super("N/A", 0, 0,0,0);
     }
-    public Deer(String species, int maxHealth, double offspringChance) {
-        super(species, maxHealth, offspringChance);
+    public Deer(String species, int maxHealth, double offspringChance, int x, int y) {
+        super(species, maxHealth, offspringChance, x, y);
     }
 }

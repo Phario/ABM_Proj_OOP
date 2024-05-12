@@ -2,6 +2,7 @@ package org.critters;
 
 public abstract class ACritter implements Critters {
     protected String Species;
+    protected int x, y; // New attributes for the position
     protected int maxHealth;
     protected int hunger;
     protected int thirst;
@@ -16,13 +17,15 @@ public abstract class ACritter implements Critters {
 //    What do we do with it? I don't fucking know, at least now we know how long our favourite animals live
     static int globalCritterID = 0;
     int critterID;
-    public ACritter(String Species, int maxHealth, double offspringChance) {
+    public ACritter(String Species, int maxHealth, double offspringChance, int x, int y) {
         this.Species = Species;
         this.maxHealth = maxHealth;
         this.offspringChance = offspringChance;
         this.hunger = 100;
         this.age = 0;
         this.thirst = 100;
+        this.x = x; // Initialize position x
+        this.y = y; // Initialize position y
         this.critterID = globalCritterID;
         globalCritterID++;
     }
@@ -35,5 +38,13 @@ public abstract class ACritter implements Critters {
         this.thirst = 100;
         this.critterID = globalCritterID;
         globalCritterID += 1;
+    }
+    // Getters for position
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

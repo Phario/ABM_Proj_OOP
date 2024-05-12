@@ -8,10 +8,10 @@ public class Hare extends ACritter implements Burrower {
         return critterID;
     }
     public Hare() {
-        super("N/A", 0, 0);
+        super("N/A", 0, 0, 0, 0);
     }
-    public Hare(String species, int maxHealth, double offspringChance) {
-        super(species, maxHealth, offspringChance);
+    public Hare(String species, int maxHealth, double offspringChance, int x, int y) {
+        super(species, maxHealth, offspringChance,x ,y);
     }
 
     @Override

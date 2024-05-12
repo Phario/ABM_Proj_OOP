@@ -8,9 +8,9 @@ public class Bear extends ACritter {
         return critterID;
     }
     public Bear() {
-        super("N/A", 0, 0);
+        super("N/A", 0, 0, 0, 0);
     }
-    public Bear(String species, int maxHealth, double offspringChance) {
-        super(species, maxHealth, offspringChance);
+    public Bear(String species, int maxHealth, double offspringChance, int x, int y) {
+        super(species, maxHealth, offspringChance, x, y);
     }
 }
