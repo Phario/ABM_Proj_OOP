@@ -11,6 +11,7 @@ import java.util.List;
 public class Map {
 
 
+
     public void checkAndDamage() {
         for (--) {
             if (--) {
@@ -38,5 +39,13 @@ public class Map {
                 }
             }
         }
+    }
+
+    // gettery
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
     }
 }
