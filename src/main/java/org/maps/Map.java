@@ -9,7 +9,13 @@ import java.util.List;
 
 
 public class Map {
-
+    private void turnManager() {}
+    private void environmentObjectSpawner() {}
+    public void startSimulation() {}
+    private void PETAHandler() {}
+    private void breeder() {}
+    private void dataCollector() {}
+    private void aging() {}
 
 
     public void checkAndDamage() {
