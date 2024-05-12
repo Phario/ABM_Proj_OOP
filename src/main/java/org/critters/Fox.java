@@ -1,5 +1,7 @@
 package org.critters;
 
+import java.util.ArrayList;
+
 public class Fox extends ACritter implements Burrower {
     public void receiveDamage(int dmg) {
         maxHealth -= dmg;
@@ -17,6 +19,7 @@ public class Fox extends ACritter implements Burrower {
     @Override
     public void burrower() {
         //code for making a burrow next to the creature's location
-
     }
+    public void scanEnvironment(ArrayList<Integer> maps) {}
+
 }
