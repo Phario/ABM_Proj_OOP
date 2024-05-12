@@ -17,6 +17,7 @@ public class Map {
     private void dataCollector() {}
     private void aging() {}
 
+
     public void checkAndDamage() {
         for (--) {
             if (--) {
@@ -44,5 +45,13 @@ public class Map {
                 }
             }
         }
+    }
+
+    // gettery
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
     }
 }
