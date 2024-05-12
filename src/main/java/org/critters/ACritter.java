@@ -36,6 +36,38 @@ public abstract class ACritter implements Critters {
         this.critterID = globalCritterID;
         globalCritterID += 1;
     }
+    public int getCritterID() {
+        return critterID;
+    }
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
+    }
+    public int getHunger() {
+        return hunger;
+    }
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setOffspringChance(double offspringChance) {
+        this.offspringChance = offspringChance;
+    }
+    public double getOffspringChance() {
+        return offspringChance;
+    }
+
+    public static int getGlobalCritterID() {
+        return globalCritterID;
+    }
+
     // Getters for position
     public int getX() {
         return x;
