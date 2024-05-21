@@ -8,4 +8,11 @@ public class Main {
         listOfBears.add(new Bear("Rysiu", 100, 0.5, 0,0));
         System.out.println(listOfBears.get(0).Species);
     }
+
+    public static class Berries {
+        protected int amount;
+        public Berries(int amount) {
+            this.amount = amount;
+        }
+    }
 }

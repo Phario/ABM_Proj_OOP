@@ -9,49 +9,45 @@ import java.util.List;
 
 
 public class Map {
-    private void turnManager() {}
+    private void turnManager(ACritter[][] map) {
+    }
     private void environmentObjectSpawner() {}
-    public void startSimulation() {}
+    public void startSimulation() {
+        int N = 10;
+        int M = 10;
+                    ACritter[][] map = new ACritter[10][10];
+
+                    // Przykładowe wypełnienie mapy zwierzętami
+                    map[0][0] = new Bear("Bear", 100, 0.2, 0, 0);
+                    map[0][1] = new Deer("Deer", 50, 0.5, 0, 1);
+                    map[1][0] = new Fox("Fox", 30, 0.3, 1, 0);
+    }
     private void PETAHandler() {}
     private void breeder() {}
     private void dataCollector() {}
     private void aging() {}
 
 
-    public void checkAndDamage() {
-        for (--) {
-            if (--) {
-                boolean hasFox = false, hasWolf = false, hasBear = false;
-                for (ACritter critter : critters) {
-                    if (critter instanceof Fox) hasFox = true;
-                    if (critter instanceof Wolf) hasWolf = true;
-                    if (critter instanceof Bear) hasBear = true;
-                }
+    private static boolean isValid(int x, int y, int rows, int cols) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
+    }
 
-                for (ACritter critter : critters) {
-                    if (hasFox && critter instanceof Hare) {
-                        critter.receiveDamage(50); // Fox damages Hare
-                    }
-                    if (hasWolf && critter instanceof Hare) {
-                        critter.receiveDamage(100); // Wolf damages Hare
-                    }
-                    if (hasWolf && critter instanceof Deer) {
-                        critter.receiveDamage(100); // Wolf damages Deer
-                    }
-                    if (hasBear && critter instanceof Deer) {
-                        critter.receiveDamage(200); // Bear damages Deer
-                    }
-                    // we need to increase hunger after dealing dmg
-                }
-            }
+    private static void performAction(ACritter critter, ACritter neighbor) {
+        if (neighbor instanceof Bear) {
+
+        } else if (neighbor instanceof Deer) {
+
+        } else if (neighbor instanceof Fox) {
+
         }
+
     }
 
-    // gettery
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
+//    // gettery
+//    public int getX() {
+//        return x;
+//    }
+//    public int getY() {
+//        return y;
+//    }
 }
