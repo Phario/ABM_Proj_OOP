@@ -1,5 +1,5 @@
 package org.critters;
-
+import org.maps.*;
 public abstract class ACritter implements Critters {
     protected String Species;
     protected int x, y; // New attributes for the position
@@ -36,6 +36,21 @@ public abstract class ACritter implements Critters {
         this.critterID = globalCritterID;
         globalCritterID += 1;
     }
+    public boolean scanEnvironment(String objectName) {
+        for (int environmentY = this.y - 1; environmentY <= this.y + 1; environmentY++) {
+            for (int environmentX = this.x - 1; environmentX <= this.x + 1; environmentX++) {
+                try {
+                    if (environmentX < 0 || environmentY < 0) continue; // Skip invalid coordinates
+                    if (environmentX == this.x && environmentY == this.y) continue; // Prevents the object from detecting itself
+                    if (Map.getArrayObjectName(environmentX, environmentY).equals(objectName)) return true;
+                } catch (ArrayIndexOutOfBoundsException e) {continue;}
+            }
+        }
+        return false;
+    }
+     //Input:   Desired object
+      //Output: True/False whether it's in the object's vicinity
+      //Usage:  Scanning for food, prey, mates, burrows and free spaces
     public int getCritterID() {
         return critterID;
     }
@@ -63,7 +78,8 @@ public abstract class ACritter implements Critters {
     public double getOffspringChance() {
         return offspringChance;
     }
-
+    public String getSpecies() {return Species; }
+    public void setSpecies() {this.Species = Species; }
     public static int getGlobalCritterID() {
         return globalCritterID;
     }
