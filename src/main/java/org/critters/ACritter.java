@@ -51,7 +51,7 @@ public abstract class ACritter implements Critters {
      //Input:   Desired object
       //Output: True/False whether it's in the object's vicinity
       //Usage:  Scanning for food, prey, mates, burrows and free spaces
-    public int getCritterID() {
+    public Integer getCritterID() {
         return critterID;
     }
     public void setHunger(int hunger) {
