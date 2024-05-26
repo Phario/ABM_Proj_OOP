@@ -56,9 +56,93 @@ public class Map {
     private void critterTurnManager(ACritter[][] map, Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] != null && !"NULL".equals(map[i][j].getSpecies())) {
+                // if (map[i][j] != null && !"NULL".equals(map[i][j].getSpecies())) {
                     //needs a method to get move a critter based on his id and a switch/case statement
                     //to make a critter's move based on his species
+                if (map[i][j] != null && map[i][j].getCritterID() == critterID) {
+                    ACritter critter = map[i][j];
+
+
+                    switch (critter.getSpecies()) {
+                        case "Bear":
+                            if(critter.scanEnvironment("Bear")){
+                                breeder();
+                            }
+                            if(critter.scanEnvironment("Deer")){}
+                            if(critter.scanEnvironment("Fox")){}
+                            if(critter.scanEnvironment("Hare")){}
+                            if(critter.scanEnvironment("Wolf")){}
+                            if(critter.scanEnvironment("Berries")){}
+                            if(critter.scanEnvironment("Burrows")){}
+                            moveCritter(critter, map, i, j);
+                            break;
+                        case "Deer":
+                            if(critter.scanEnvironment("Bear")){
+
+                            }
+                            if(critter.scanEnvironment("Deer")){
+                                breeder();
+                            }
+                            if(critter.scanEnvironment("Fox")){}
+                            if(critter.scanEnvironment("Hare")){}
+                            if(critter.scanEnvironment("Wolf")){}
+                            if(critter.scanEnvironment("Berries")){}
+                            if(critter.scanEnvironment("Burrows")){}
+
+                            moveCritter(critter, map, i, j);
+                            break;
+                        case "Fox":
+                            if(critter.scanEnvironment("Bear")){}
+                            if(critter.scanEnvironment("Deer")){}
+                            if(critter.scanEnvironment("Fox")){
+                                breeder();
+                            }
+                            if(critter.scanEnvironment("Hare")){}
+                            if(critter.scanEnvironment("Wolf")){}
+                            if(critter.scanEnvironment("Berries")){}
+                            if(critter.scanEnvironment("Burrows")){}
+
+                            moveCritter(critter, map, i, j);
+                            break;
+                        case "Hare":
+                            if(critter.scanEnvironment("Bear")){}
+                            if(critter.scanEnvironment("Deer")){}
+                            if(critter.scanEnvironment("Fox")){}
+                            if(critter.scanEnvironment("Hare")){
+                                breeder();
+                            }
+                            if(critter.scanEnvironment("Wolf")){}
+                            if(critter.scanEnvironment("Berries")){}
+                            if(critter.scanEnvironment("Burrows")){}
+
+                            moveCritter(critter, map, i, j);
+                            break;
+                        case "Wolf":
+                            if(critter.scanEnvironment("Bear")){}
+                            if(critter.scanEnvironment("Deer")){}
+                            if(critter.scanEnvironment("Fox")){}
+                            if(critter.scanEnvironment("Hare")){}
+                            if(critter.scanEnvironment("Wolf")){
+                                breeder();
+                            }
+                            if(critter.scanEnvironment("Berries")){}
+                            if(critter.scanEnvironment("Burrows")){}
+
+                            moveCritter(critter, map, i, j);
+                            break;
+                        default:
+                            break;
+                    }
+                    // Decrease hunger by 10 at the beginning of the turn
+                    critter.setHunger(critter.getHunger() - 10);
+
+                    // If hunger reaches 0 or below, remove the critter
+                    if (critter.getHunger() <= 0) {
+                        PETAHandler(critterID);
+                        return; // Exit the turn as the critter is removed
+                    }
+
+                    break; // End search once the correct critter is found and moved
                 }
             }
         }
@@ -67,6 +151,14 @@ public class Map {
     //manages a critter's turn depending on what kind of object it is
     //needs a switch/case statement dependent on species, calls on other methods
     //so it will be the last one to be written
+
+    // General method to move critters
+    private void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
+        int newX, newY;
+        do {
+            newX = x + random.nextInt(3) - 1; // Random number between -1 and 1
+            newY = y + random.nextInt(3) - 1; // Random number between -1 and 1
+        } while (!isValid(newX, newY, map.length, map[0].length) || map[newX][newY] != null);}
     private void environmentObjectSpawner(String objectType, int amount) {
         int rows = map.length;
         int cols = map[0].length;
