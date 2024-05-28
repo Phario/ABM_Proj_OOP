@@ -2,20 +2,15 @@ package org.maps;
 
 
 import org.critters.*;
-import java.util.Random;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-
+import java.util.*;
 
 
 public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
     private void turnManager(ACritter[][] map) {
-        ArrayList<Integer> critterIDList = new ArrayList<Integer>();
+        ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -59,7 +54,7 @@ public class Map {
                 // if (map[i][j] != null && !"NULL".equals(map[i][j].getSpecies())) {
                     //needs a method to get move a critter based on his id and a switch/case statement
                     //to make a critter's move based on his species
-                if (map[i][j] != null && map[i][j].getCritterID() == critterID) {
+                if (map[i][j] != null && Objects.equals(map[i][j].getCritterID(), critterID)) {
                     ACritter critter = map[i][j];
 
 
@@ -179,10 +174,11 @@ public class Map {
                 }
             }
         }
-    }                                           //takes 2 random numbers from 0 to array length/width and
-                                                //places an object there only if the space is free, if it isn't then
-                                                //it looks again for a free space, needs input parameters such as
-                                                //type of object to spawn and the amount of the object
+    }
+    //takes 2 random numbers from 0 to array length/width and
+    //places an object there only if the space is free, if it isn't then
+    //it looks again for a free space, needs input parameters such as
+    //type of object to spawn and the amount of the object
 
     private ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
@@ -223,6 +219,7 @@ public class Map {
                     environmentObjectSpawner("Deer", 5);
                     environmentObjectSpawner("Fox", 5);
     }
+    //method that WILL ask the user to input simulation start data, trust me bro.
     private void PETAHandler(int critterID) {
         int rows = map.length;
         int columns = map[0].length;
@@ -272,10 +269,12 @@ public class Map {
 
     // Usage:checks all fields on the map, if it encounters an object it checks all fields around it,
     // if the field is empty it creates an object of the same class with age 0 and breaks the loop
-    // (I didn't know how to use scanEnvironment)
 
-    private void dataCollector() {} //at the end of every turn opens a file, writes the data such as amount of objects
-                                    //and closes the file in case you wanted to stop the simulation early
+    private void dataCollector() {
+    //figure out how to save data to a file so a graph can be made later
+    }
+    //at the end of every turn opens a file, writes the data such as amount of objects
+    //and closes the file in case you wanted to stop the simulation early
     private void aging() {
         int rows = map.length;
         int cols = map[0].length;
@@ -313,9 +312,9 @@ public class Map {
             }
         }
     }
-            // Usage: searches the entire map, there is an object increases its age checks its species
+            // Usage: searches the entire map, if there is an object it increases its age, checks its species
             // and calls PETAHandler to remove object if it's too old.
-            // if it encounters another object(berry) nothing happens
+            // if it encounters a berry nothing happens
 
 
     private static boolean isValid(int x, int y, int rows, int cols) {
