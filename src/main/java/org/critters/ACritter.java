@@ -14,7 +14,7 @@ public abstract class ACritter implements Critters {
 //    Wolves live up to 10 years
 //    Foxes live up to 4 years
 //    What do we do with it? I don't fucking know, at least now we know how long our favourite animals live
-    static int globalCritterID = 0;
+    static int globalCritterID = 1;
     int critterID;
     public ACritter(String Species, int maxHealth, double offspringChance, int x, int y) {
         this.Species = Species;
@@ -36,17 +36,17 @@ public abstract class ACritter implements Critters {
         this.critterID = globalCritterID;
         globalCritterID += 1;
     }
-    public boolean scanEnvironment(String objectName) {
+    public Integer scanEnvironment(String objectName) {
         for (int environmentY = this.y - 1; environmentY <= this.y + 1; environmentY++) {
             for (int environmentX = this.x - 1; environmentX <= this.x + 1; environmentX++) {
                 try {
                     if (environmentX < 0 || environmentY < 0) continue; // Skip invalid coordinates
                     if (environmentX == this.x && environmentY == this.y) continue; // Prevents the object from detecting itself
-                    if (Map.getArrayObjectName(environmentX, environmentY).equals(objectName)) return true;
+                    if (Map.getArrayObjectName(environmentX, environmentY).equals(objectName)) return Map.getArrayObjectID(environmentX,environmentY);
                 } catch (ArrayIndexOutOfBoundsException e) {continue;}
             }
         }
-        return false;
+        return 0;
     }
      //Input:   Desired object
       //Output: True/False whether it's in the object's vicinity

@@ -18,7 +18,7 @@ public class Hare extends ACritter implements Burrower {
 
     @Override
     public void burrower() {
-        //code for making a burrow next to the creature's location
+        
     }
     public void scanEnvironment(ArrayList<Integer> maps) {}
 
