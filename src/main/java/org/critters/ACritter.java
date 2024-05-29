@@ -3,7 +3,6 @@ import org.maps.*;
 public abstract class ACritter implements Critters {
     protected String Species;
     protected int x, y; // New attributes for the position
-    protected int maxHealth;
     protected int hunger;
     //    When one of these 2 drop down to 0 the animal is supposed to die
     protected double offspringChance;
@@ -16,9 +15,8 @@ public abstract class ACritter implements Critters {
 //    What do we do with it? I don't fucking know, at least now we know how long our favourite animals live
     static int globalCritterID = 1;
     int critterID;
-    public ACritter(String Species, int maxHealth, double offspringChance, int x, int y) {
+    public ACritter(String Species, double offspringChance, int x, int y) {
         this.Species = Species;
-        this.maxHealth = maxHealth;
         this.offspringChance = offspringChance;
         this.hunger = 100;
         this.age = 0;
@@ -29,12 +27,14 @@ public abstract class ACritter implements Critters {
     }
     public ACritter() {
         this.Species = "N/A";
-        this.maxHealth = 1;
         this.offspringChance = 0;
         this.hunger = 100;
         this.age = 0;
         this.critterID = globalCritterID;
         globalCritterID += 1;
+    }
+    public void eat(int foodValue) {
+        this.hunger += foodValue;
     }
     public Integer scanEnvironment(String objectName) {
         for (int environmentY = this.y - 1; environmentY <= this.y + 1; environmentY++) {
@@ -49,8 +49,8 @@ public abstract class ACritter implements Critters {
         return 0;
     }
      //Input:   Desired object
-      //Output: True/False whether it's in the object's vicinity
-      //Usage:  Scanning for food, prey, mates, burrows and free spaces
+     //Output: True/False whether it's in the object's vicinity
+     //Usage:  Scanning for food, prey, mates, burrows and free spaces
     public Integer getCritterID() {
         return critterID;
     }
@@ -60,12 +60,7 @@ public abstract class ACritter implements Critters {
     public int getHunger() {
         return hunger;
     }
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-    public int getMaxHealth() {
-        return maxHealth;
-    }
+
     public void setAge(int age) {
         this.age = age;
     }
