@@ -40,7 +40,7 @@ public class Map {
                 //end search when correct ID is found
             }
             critterIDList.remove(critterIndex);
-            //removes an object from an array so it can't make 2 moves in a turn
+            //removes an object from an array, so it can't make 2 moves in a turn
         }
     }
     //takes the map as a parameter and a random number generator to
@@ -52,77 +52,301 @@ public class Map {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 // if (map[i][j] != null && !"NULL".equals(map[i][j].getSpecies())) {
-                    //needs a method to get move a critter based on his id and a switch/case statement
-                    //to make a critter's move based on his species
+                //needs a method to get move a critter based on his id and a switch/case statement
+                //to make a critter's move based on his species
                 if (map[i][j] != null && Objects.equals(map[i][j].getCritterID(), critterID)) {
-                    ACritter critter = map[i][j];
+                    ACritter critter = map[i][j]; //makes a copy of a critter for more readable code
 
 
                     switch (critter.getSpecies()) {
                         case "Bear":
-                            if(critter.scanEnvironment("Bear")){
+                            if(critter.scanEnvironment("Bear") != 0){
                                 breeder();
                             }
-                            if(critter.scanEnvironment("Deer")){}
-                            if(critter.scanEnvironment("Fox")){}
-                            if(critter.scanEnvironment("Hare")){}
-                            if(critter.scanEnvironment("Wolf")){}
-                            if(critter.scanEnvironment("Berries")){}
-                            if(critter.scanEnvironment("Burrows")){}
+                            if(critter.scanEnvironment("Deer") != 0){
+                                Integer preyID = critter.scanEnvironment("Deer");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(30);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Fox") != 0){
+                                Integer preyID = critter.scanEnvironment("Fox");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            Integer burrowID = map[k][l].scanEnvironment("Burrow");
+                                            if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(10);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Hare") != 0){
+                                Integer preyID = critter.scanEnvironment("Hare");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            Integer burrowID = map[k][l].scanEnvironment("Burrow");
+                                            if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(10);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Wolf") != 0){
+                                Integer preyID = critter.scanEnvironment("Wolf");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 2){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(20);
+                                                break;
+                                            }
+                                            else PETAHandler(critter.getCritterID());
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Berries") != 0){
+                                Integer preyID = critter.scanEnvironment("Berries");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            PETAHandler(preyID);
+                                            map[i][j].eat(15);
+                                            break;
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
                             moveCritter(critter, map, i, j);
                             break;
                         case "Deer":
-                            if(critter.scanEnvironment("Bear")){
-
-                            }
-                            if(critter.scanEnvironment("Deer")){
+                            if(critter.scanEnvironment("Deer") != 0){
                                 breeder();
                             }
-                            if(critter.scanEnvironment("Fox")){}
-                            if(critter.scanEnvironment("Hare")){}
-                            if(critter.scanEnvironment("Wolf")){}
-                            if(critter.scanEnvironment("Berries")){}
-                            if(critter.scanEnvironment("Burrows")){}
-
+                            if(critter.scanEnvironment("Berries") != 0){
+                                Integer preyID = critter.scanEnvironment("Berries");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            PETAHandler(preyID);
+                                            map[i][j].eat(15);
+                                            break;
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
                             moveCritter(critter, map, i, j);
                             break;
                         case "Fox":
-                            if(critter.scanEnvironment("Bear")){}
-                            if(critter.scanEnvironment("Deer")){}
-                            if(critter.scanEnvironment("Fox")){
+                            if(critter.scanEnvironment("Fox") != 0){
                                 breeder();
                             }
-                            if(critter.scanEnvironment("Hare")){}
-                            if(critter.scanEnvironment("Wolf")){}
-                            if(critter.scanEnvironment("Berries")){}
-                            if(critter.scanEnvironment("Burrows")){}
-
+                            if(critter.scanEnvironment("Hare") != 0){
+                                Integer preyID = critter.scanEnvironment("Hare");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            Integer burrowID = map[k][l].scanEnvironment("Burrow");
+                                            if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(10);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
                             moveCritter(critter, map, i, j);
                             break;
                         case "Hare":
-                            if(critter.scanEnvironment("Bear")){}
-                            if(critter.scanEnvironment("Deer")){}
-                            if(critter.scanEnvironment("Fox")){}
-                            if(critter.scanEnvironment("Hare")){
+                            if(critter.scanEnvironment("Hare") != 0){
                                 breeder();
                             }
-                            if(critter.scanEnvironment("Wolf")){}
-                            if(critter.scanEnvironment("Berries")){}
-                            if(critter.scanEnvironment("Burrows")){}
-
+                            if(critter.scanEnvironment("Berries") != 0){
+                                Integer preyID = critter.scanEnvironment("Berries");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            PETAHandler(preyID);
+                                            map[i][j].eat(15);
+                                            break;
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
                             moveCritter(critter, map, i, j);
                             break;
                         case "Wolf":
-                            if(critter.scanEnvironment("Bear")){}
-                            if(critter.scanEnvironment("Deer")){}
-                            if(critter.scanEnvironment("Fox")){}
-                            if(critter.scanEnvironment("Hare")){}
-                            if(critter.scanEnvironment("Wolf")){
+                            if(critter.scanEnvironment("Bear") != 0){
+                                Integer preyID = critter.scanEnvironment("Bear");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 5){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(20);
+                                                break;
+                                            }
+                                            else PETAHandler(critter.getCritterID());
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Deer") != 0){
+                                Integer preyID = critter.scanEnvironment("Deer");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(30);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Fox") != 0){
+                                Integer preyID = critter.scanEnvironment("Fox");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            Integer burrowID = map[k][l].scanEnvironment("Burrow");
+                                            if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(10);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Hare") != 0){
+                                Integer preyID = critter.scanEnvironment("Hare");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            Integer burrowID = map[k][l].scanEnvironment("Burrow");
+                                            if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
+                                            int successChance = random.nextInt(1, 7);
+                                            if(successChance > 3){
+                                                PETAHandler(preyID);
+                                                map[i][j].eat(10);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
+                            if(critter.scanEnvironment("Wolf") != 0){
                                 breeder();
                             }
-                            if(critter.scanEnvironment("Berries")){}
-                            if(critter.scanEnvironment("Burrows")){}
-
+                            if(critter.scanEnvironment("Berries") != 0){
+                                Integer preyID = critter.scanEnvironment("Berries");
+                                boolean critterFound = false;
+                                for (int k = i-1; k <= i+1; k++) {
+                                    if (k < 0 || k >= map.length) continue;
+                                    for (int l = j-1; l <= j+1; l++) {
+                                        if (l < 0 || l >= map[0].length) continue;
+                                        if (preyID.equals(map[k][l].getCritterID())) {
+                                            critterFound = true;
+                                            PETAHandler(preyID);
+                                            map[i][j].eat(15);
+                                            break;
+                                        }
+                                    }
+                                    if (critterFound) break;
+                                }
+                            }
                             moveCritter(critter, map, i, j);
                             break;
                         default:
@@ -145,7 +369,7 @@ public class Map {
     //input: map and critterID
     //manages a critter's turn depending on what kind of object it is
     //needs a switch/case statement dependent on species, calls on other methods
-    //so it will be the last one to be written
+    //,so it will be the last one to be written
 
     // General method to move critters
     private void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
@@ -175,7 +399,7 @@ public class Map {
             }
         }
     }
-    //takes 2 random numbers from 0 to array length/width and
+    //takes two random numbers from 0 to array length/width and
     //places an object there only if the space is free, if it isn't then
     //it looks again for a free space, needs input parameters such as
     //type of object to spawn and the amount of the object
@@ -183,19 +407,19 @@ public class Map {
     private ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
             case "Bear":
-                return new Bear("Bear", 100, 0.2, x, y);
+                return new Bear("Bear", 0.2, x, y);
             case "Deer":
-                return new Deer("Deer", 50, 0.5, x, y);
+                return new Deer("Deer", 0.5, x, y);
             case "Fox":
-                return new Fox("Fox", 1, 0.3, x, y);
+                return new Fox("Fox", 0.4, x, y);
             case "Hare":
-                return new Hare("Hare", 1, 0.4, x, y);
+                return new Hare("Hare", 0.6, x, y);
             case "Wolf":
-                return new Wolf("Wolf", 80, 0.3, x, y);
+                return new Wolf("Wolf", 0.3, x, y);
             case "Berries":
-                return new Berries("Berries", 3, 0, x, y);
+                return new Berries("Berries", 0, x, y);
             case "Burrows":
-                return new Burrows("Burrow", 5, 0, x, y);
+                return new Burrows("Burrow", 0, x, y);
             default:
                 System.out.println("Unknown type: " + objectType);
                 return null;
@@ -209,9 +433,9 @@ public class Map {
                     map = new ACritter[N][M];
 
                     // Example population of the map
-                    map[0][0] = new Bear("Bear", 100, 0.02, 0, 0);
-                    map[0][1] = new Deer("Deer", 50, 0.05, 0, 1);
-                    map[1][0] = new Fox("Fox", 30, 0.03, 1, 0);
+                    map[0][0] = new Bear("Bear", 0.02, 0, 0);
+                    map[0][1] = new Deer("Deer", 0.05, 0, 1);
+                    map[1][0] = new Fox("Fox", 0.03, 1, 0);
                     System.out.println(map[1][0].getSpecies());
 
                     // Example call to environmentObjectSpawner
@@ -232,8 +456,8 @@ public class Map {
                 }
             }
         }
-    }   // removes an object from the map, needs  ID
-        // search the entire map for the animal and remove it
+    }
+    // removes an object from the map, needs  ID
 
     // Input:   ID
     // Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
@@ -251,10 +475,10 @@ public class Map {
                         for (int y = i - 1; y <= i + 1 && !bred; y++) {
                             for (int x = j - 1; x <= j + 1 && !bred; x++) {
                                 if (isValid(x, y, rows, columns) && map[x][y] == null) {
-                                    ACritter offspringbaby = createCritter(parent.getSpecies(), x, y);
-                                    if (offspringbaby != null) {
-                                        offspringbaby.setAge(0);
-                                        map[x][y] = offspringbaby;
+                                    ACritter offSpringBaby = createCritter(parent.getSpecies(), x, y);
+                                    if (offSpringBaby != null) {
+                                        offSpringBaby.setAge(0);
+                                        map[x][y] = offSpringBaby;
                                         bred = true;
                                     }
                                 }
@@ -264,12 +488,9 @@ public class Map {
                 }
             }
         }
-    }       // looks for an empty space around an animal with scanEnvironment and places a new
-                                    //instance of the animal there with age = 0
-
-    // Usage:checks all fields on the map, if it encounters an object it checks all fields around it,
-    // if the field is empty it creates an object of the same class with age 0 and breaks the loop
-
+    }
+    // looks for an empty space around an animal and places a new
+    // instance of the animal there with age = 0
     private void dataCollector() {
     //figure out how to save data to a file so a graph can be made later
     }
@@ -289,21 +510,24 @@ public class Map {
                         case "Bear":
                             if(critter.getAge()>20){PETAHandler(critter.getCritterID());}
                             break;
-
                         case "Deer":
                             if(critter.getAge()>10){PETAHandler(critter.getCritterID());}
                             break;
                         case "Fox":
                             if(critter.getAge()>4){PETAHandler(critter.getCritterID());}
                             break;
-
                         case "Hare":
                             if(critter.getAge()>4){PETAHandler(critter.getCritterID());}
                             break;
                         case "Wolf":
                             if(critter.getAge()>10){PETAHandler(critter.getCritterID());}
                             break;
-
+                        case "Berries":
+                            if(critter.getAge()>3){PETAHandler(critter.getCritterID());}
+                            break;
+                        case "Burrow":
+                            if(critter.getAge()>3){PETAHandler(critter.getCritterID());}
+                            break;
                         default:
                             break;
                     }
@@ -320,18 +544,10 @@ public class Map {
     private static boolean isValid(int x, int y, int rows, int cols) {
         return x >= 0 && x < rows && y >= 0 && y < cols;
     }
-
-    /*private static void performAction(ACritter critter, ACritter neighbor) {
-        if (neighbor instanceof Bear) {
-
-        } else if (neighbor instanceof Deer) {
-
-        } else if (neighbor instanceof Fox) {
-
-        }
-
-    }*/ //commented for now, the critter turn manager is going to check each animal's parameters and then make decisions
     public static String getArrayObjectName(int x, int y) {
         return map[x][y].getSpecies();
     }//gets an object's name from an array's field and returns it
+    public static Integer getArrayObjectID(int x, int y) {
+        return map[x][y].getCritterID();
+    }
 }
