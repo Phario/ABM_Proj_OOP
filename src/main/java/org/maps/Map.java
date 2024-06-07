@@ -2,14 +2,16 @@ package org.maps;
 
 
 import org.critters.*;
-
 import java.util.*;
-
+import static org.maps.Config.*;
 
 public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
-    private void turnManager(ACritter[][] map) {
+    public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
+    //simulation initialization
+    }
+    public static void turnManager(ACritter[][] map) {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
@@ -48,16 +50,13 @@ public class Map {
     //This method creates a list of critters and removes them after they move, they are chosen
     //based on their ID
     //turnManager manages ONLY 1 TURN, the main method is going to have a loop with the number of turns
-    private void critterTurnManager(ACritter[][] map, Integer critterID) {
+    private static void critterTurnManager(ACritter[][] map, Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                // if (map[i][j] != null && !"NULL".equals(map[i][j].getSpecies())) {
-                //needs a method to get move a critter based on his id and a switch/case statement
-                //to make a critter's move based on his species
                 if (map[i][j] != null && Objects.equals(map[i][j].getCritterID(), critterID)) {
                     ACritter critter = map[i][j]; //makes a copy of a critter for more readable code
-
-
+                    map[i][j].setX(i);
+                    map[i][j].setY(j);
                     switch (critter.getSpecies()) {
                         case "Bear":
                             if(critter.scanEnvironment("Bear") != 0){
@@ -72,10 +71,13 @@ public class Map {
                                         if (l < 0 || l >= map[0].length) continue;
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= bearVsDeer){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(30);
+                                                map[i][j].eat(deerFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -94,10 +96,13 @@ public class Map {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= bearVsFox){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(10);
+                                                map[i][j].eat(foxFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -116,10 +121,13 @@ public class Map {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= bearVsHare){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(10);
+                                                map[i][j].eat(hareFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -136,10 +144,13 @@ public class Map {
                                         if (l < 0 || l >= map[0].length) continue;
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 2){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= bearVsWolf){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(20);
+                                                map[i][j].eat(wolfFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                             else PETAHandler(critter.getCritterID());
@@ -158,7 +169,10 @@ public class Map {
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
                                             PETAHandler(preyID);
-                                            map[i][j].eat(15);
+                                            map[i][j].eat(berriesFoodValue);
+                                            if (map[i][j].getHunger() > 100) {
+                                                map[i][j].setHunger(100);
+                                            }
                                             break;
                                         }
                                     }
@@ -181,7 +195,10 @@ public class Map {
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
                                             PETAHandler(preyID);
-                                            map[i][j].eat(15);
+                                            map[i][j].eat(berriesFoodValue);
+                                            if (map[i][j].getHunger() > 100) {
+                                                map[i][j].setHunger(100);
+                                            }
                                             break;
                                         }
                                     }
@@ -205,10 +222,13 @@ public class Map {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= foxVsHare){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(10);
+                                                map[i][j].eat(hareFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -232,7 +252,10 @@ public class Map {
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
                                             PETAHandler(preyID);
-                                            map[i][j].eat(15);
+                                            map[i][j].eat(berriesFoodValue);
+                                            if (map[i][j].getHunger() > 100) {
+                                                map[i][j].setHunger(100);
+                                            }
                                             break;
                                         }
                                     }
@@ -251,10 +274,13 @@ public class Map {
                                         if (l < 0 || l >= map[0].length) continue;
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 5){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= wolfVsBear){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(20);
+                                                map[i][j].eat(bearFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                             else PETAHandler(critter.getCritterID());
@@ -272,10 +298,13 @@ public class Map {
                                         if (l < 0 || l >= map[0].length) continue;
                                         if (preyID.equals(map[k][l].getCritterID())) {
                                             critterFound = true;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= wolfVsDeer){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(30);
+                                                map[i][j].eat(deerFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -294,10 +323,13 @@ public class Map {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= wolfVsFox){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(10);
+                                                map[i][j].eat(foxFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -316,10 +348,13 @@ public class Map {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
-                                            int successChance = random.nextInt(1, 7);
-                                            if(successChance > 3){
+                                            int successChance = random.nextInt(101);
+                                            if(successChance <= wolfVsHare){
                                                 PETAHandler(preyID);
-                                                map[i][j].eat(10);
+                                                map[i][j].eat(hareFoodValue);
+                                                if (map[i][j].getHunger() > 100) {
+                                                    map[i][j].setHunger(100);
+                                                }
                                                 break;
                                             }
                                         }
@@ -330,30 +365,13 @@ public class Map {
                             if(critter.scanEnvironment("Wolf") != 0){
                                 breeder();
                             }
-                            if(critter.scanEnvironment("Berries") != 0){
-                                Integer preyID = critter.scanEnvironment("Berries");
-                                boolean critterFound = false;
-                                for (int k = i-1; k <= i+1; k++) {
-                                    if (k < 0 || k >= map.length) continue;
-                                    for (int l = j-1; l <= j+1; l++) {
-                                        if (l < 0 || l >= map[0].length) continue;
-                                        if (preyID.equals(map[k][l].getCritterID())) {
-                                            critterFound = true;
-                                            PETAHandler(preyID);
-                                            map[i][j].eat(15);
-                                            break;
-                                        }
-                                    }
-                                    if (critterFound) break;
-                                }
-                            }
                             moveCritter(critter, map, i, j);
                             break;
                         default:
                             break;
                     }
-                    // Decrease hunger by 10 at the beginning of the turn
-                    critter.setHunger(critter.getHunger() - 10);
+                    // Decrease hunger by hungerDrain at the beginning of the turn
+                    critter.setHunger(critter.getHunger() - hungerDrain);
 
                     // If hunger reaches 0 or below, remove the critter
                     if (critter.getHunger() <= 0) {
@@ -368,11 +386,10 @@ public class Map {
     }
     //input: map and critterID
     //manages a critter's turn depending on what kind of object it is
-    //needs a switch/case statement dependent on species, calls on other methods
-    //,so it will be the last one to be written
+    //add behaviour for each critter when hunger is at 100;
 
     // General method to move critters
-    private void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
+    private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
         int newX, newY;
         do {
             newX = x + random.nextInt(3) - 1; // Random number between -1 and 1
@@ -404,7 +421,7 @@ public class Map {
     //it looks again for a free space, needs input parameters such as
     //type of object to spawn and the amount of the object
 
-    private ACritter createCritter(String objectType, int x, int y) {
+    private static ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
             case "Bear":
                 return new Bear("Bear", 0.2, x, y);
@@ -444,7 +461,7 @@ public class Map {
                     environmentObjectSpawner("Fox", 5);
     }
     //method that WILL ask the user to input simulation start data, trust me bro.
-    private void PETAHandler(int critterID) {
+    private static void PETAHandler(int critterID) {
         int rows = map.length;
         int columns = map[0].length;
 
@@ -461,7 +478,7 @@ public class Map {
 
     // Input:   ID
     // Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
-    private void breeder() {
+    private static void breeder() {
         int rows = map.length;
         int columns = map[0].length;
 
