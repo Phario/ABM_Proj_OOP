@@ -1,11 +1,20 @@
 package org.maps;
 
-
+import java.util.List;
+import java.util.Map;
 import org.critters.*;
 import java.util.*;
 import static org.maps.Config.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Map {
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+
+public class Mapa {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
@@ -60,7 +69,7 @@ public class Map {
                     switch (critter.getSpecies()) {
                         case "Bear":
                             if(critter.scanEnvironment("Bear") != 0){
-                                breeder();
+                                breeder(critter.getCritterID());
                             }
                             if(critter.scanEnvironment("Deer") != 0){
                                 Integer preyID = critter.scanEnvironment("Deer");
@@ -183,7 +192,7 @@ public class Map {
                             break;
                         case "Deer":
                             if(critter.scanEnvironment("Deer") != 0){
-                                breeder();
+                                breeder(critter.getCritterID());
                             }
                             if(critter.scanEnvironment("Berries") != 0){
                                 Integer preyID = critter.scanEnvironment("Berries");
@@ -209,7 +218,7 @@ public class Map {
                             break;
                         case "Fox":
                             if(critter.scanEnvironment("Fox") != 0){
-                                breeder();
+                                breeder(critter.getCritterID());
                             }
                             if(critter.scanEnvironment("Hare") != 0){
                                 Integer preyID = critter.scanEnvironment("Hare");
@@ -240,7 +249,7 @@ public class Map {
                             break;
                         case "Hare":
                             if(critter.scanEnvironment("Hare") != 0){
-                                breeder();
+                                breeder(critter.getCritterID());
                             }
                             if(critter.scanEnvironment("Berries") != 0){
                                 Integer preyID = critter.scanEnvironment("Berries");
@@ -363,7 +372,7 @@ public class Map {
                                 }
                             }
                             if(critter.scanEnvironment("Wolf") != 0){
-                                breeder();
+                                breeder(critter.getCritterID());
                             }
                             moveCritter(critter, map, i, j);
                             break;
@@ -478,30 +487,61 @@ public class Map {
 
     // Input:   ID
     // Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
-    private static void breeder() {
-        int rows = map.length;
-        int columns = map[0].length;
+    private static void breeder( Integer critterID) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] != null && map[i][j].getCritterID().equals(critterID)) {
+                    ACritter critter = map[i][j];
+                    int offspringChance;
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (map[i][j] != null) {
-                    ACritter parent = map[i][j];
-                    if (parent.getOffspringChance() > random.nextDouble()) {
-                        boolean bred = false;
+                    switch (critter.getSpecies()) {
+                        case "Bear":
+                            offspringChance = bearOffspringChance;
+                            break;
+                        case "Deer":
+                            offspringChance = deerOffspringChance;
+                            break;
+                        case "Fox":
+                            offspringChance = foxOffspringChance;
+                            break;
+                        case "Hare":
+                            offspringChance = hareOffspringChance;
+                            break;
+                        case "Wolf":
+                            offspringChance = wolfOffspringChance;
+                            break;
+                        default:
+                            return; // If species is unknown, do nothing
+                    }
 
-                        for (int y = i - 1; y <= i + 1 && !bred; y++) {
-                            for (int x = j - 1; x <= j + 1 && !bred; x++) {
-                                if (isValid(x, y, rows, columns) && map[x][y] == null) {
-                                    ACritter offSpringBaby = createCritter(parent.getSpecies(), x, y);
-                                    if (offSpringBaby != null) {
-                                        offSpringBaby.setAge(0);
-                                        map[x][y] = offSpringBaby;
-                                        bred = true;
-                                    }
+                    // determine if a new critter should be created
+                    if (random.nextInt(100) < offspringChance) {
+                        // find all empty neighboring cells
+                        int parentX = critter.getX();
+                        int parentY = critter.getY();
+                        List<int[]> emptyCells = new ArrayList<>();
+
+                        for (int y = parentY - 1; y <= parentY + 1; y++) {
+                            for (int x = parentX - 1; x <= parentX + 1; x++) {
+                                if (isValid(x, y, map.length, map[0].length) && map[y][x] == null) {
+                                    emptyCells.add(new int[]{x, y});
                                 }
                             }
                         }
+
+                        // if there are empty cells, randomly select one to create a new critter
+                        if (!emptyCells.isEmpty()) {
+                            int[] newCell = emptyCells.get(random.nextInt(emptyCells.size()));
+                            ACritter newCritter = createCritter(critter.getSpecies(), newCell[0], newCell[1]);
+
+                            if (newCritter != null) {
+                                newCritter.setAge(0); // New critter starts with age 0
+                                map[newCell[1]][newCell[0]] = newCritter; // Place new critter on the map
+                            }
+                        }
                     }
+
+                    return; // end method when critter is found
                 }
             }
         }
@@ -566,5 +606,77 @@ public class Map {
     }//gets an object's name from an array's field and returns it
     public static Integer getArrayObjectID(int x, int y) {
         return map[x][y].getCritterID();
+    }
+
+    public class AnimalCounter {
+
+        public static List<Map<String, Integer>> getAnimalCounts(ACritter[][] map, int turns) {
+            List<Map<String, Integer>> animalCountsHistory = new ArrayList<>();
+
+            for (int turn = 0; turn < turns; turn++) {
+                Map<String, Integer> animalCounts = countAnimals(map);
+                animalCountsHistory.add(animalCounts);
+
+            }
+
+            return animalCountsHistory;
+        }
+
+        private static Map<String, Integer> countAnimals(ACritter[][] map) {
+            Map<String, Integer> animalCounts = new HashMap<>();
+
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[0].length; j++) {
+                    ACritter critter = map[i][j];
+                    if (critter != null) {
+                        String species = critter.getSpecies();
+                        animalCounts.put(species, animalCounts.getOrDefault(species, 0) + 1);
+                    }
+                }
+            }
+
+            return animalCounts;
+        }
+    }
+    public class ExcelWriter {
+
+        public static void writeToExcel(List<Map<String, Integer>> animalCountsHistory) {
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("AnimalCounts");
+
+            int rowNum = 0;
+            Row headerRow = sheet.createRow(rowNum++);
+            headerRow.createCell(0).setCellValue("Turn");
+
+            Map<String, Integer> firstCounts = animalCountsHistory.get(0);
+            int colNum = 1;
+            for (String species : firstCounts.keySet()) {
+                headerRow.createCell(colNum++).setCellValue(species);
+            }
+
+            for (int turn = 0; turn < animalCountsHistory.size(); turn++) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(turn);
+
+                Map<String, Integer> counts = animalCountsHistory.get(turn);
+                colNum = 1;
+                for (int count : counts.values()) {
+                    row.createCell(colNum++).setCellValue(count);
+                }
+            }
+
+            // output of the file
+            try (FileOutputStream fileOut = new FileOutputStream("AnimalCounts.xlsx")) {
+                workbook.write(fileOut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

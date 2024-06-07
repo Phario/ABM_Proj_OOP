@@ -11,7 +11,7 @@ import static org.maps.Config.*;
     public static void main(String[] args) {
         config();
         for (int i = 0; i < turnAmount; i++) {
-           Map.turnManager(map);
+           Mapa.turnManager(map);
         }
     }
 }
