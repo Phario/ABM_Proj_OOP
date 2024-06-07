@@ -1,7 +1,7 @@
 package org.maps;
 
 import java.util.List;
-import java.util.Map;
+
 import org.critters.*;
 import java.util.*;
 import static org.maps.Config.*;
@@ -14,13 +14,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class Mapa {
+public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
     //simulation initialization
+        map = new ACritter[mapSizeX][mapSizeY];
+        environmentObjectSpawner("Bear", bearAmount);
+        environmentObjectSpawner("Deer", deerAmount);
+        environmentObjectSpawner("Fox", foxAmount);
+        environmentObjectSpawner("Hare", hareAmount);
+        environmentObjectSpawner("Wolf", wolfAmount);
+        environmentObjectSpawner("Berries", berryAmount);
+        environmentObjectSpawner("Burrow", burrowAmount);
     }
-    public static void turnManager(ACritter[][] map) {
+    public static void turnManager() {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
@@ -404,7 +412,7 @@ public class Mapa {
             newX = x + random.nextInt(3) - 1; // Random number between -1 and 1
             newY = y + random.nextInt(3) - 1; // Random number between -1 and 1
         } while (!isValid(newX, newY, map.length, map[0].length) || map[newX][newY] != null);}
-    private void environmentObjectSpawner(String objectType, int amount) {
+    private static void environmentObjectSpawner(String objectType, int amount) {
         int rows = map.length;
         int cols = map[0].length;
 
@@ -453,7 +461,7 @@ public class Mapa {
         // Input: coordinates and species
         // Usage: creates an object of the given coordinates and species
     }
-    public void startSimulation() {
+    public void startExampleSimulation() {
         int N = 10;
         int M = 10;
                     map = new ACritter[N][M];
@@ -548,11 +556,6 @@ public class Mapa {
     }
     // looks for an empty space around an animal and places a new
     // instance of the animal there with age = 0
-    private void dataCollector() {
-    //figure out how to save data to a file so a graph can be made later
-    }
-    //at the end of every turn opens a file, writes the data such as amount of objects
-    //and closes the file in case you wanted to stop the simulation early
     private void aging() {
         int rows = map.length;
         int cols = map[0].length;
@@ -610,11 +613,11 @@ public class Mapa {
 
     public class AnimalCounter {
 
-        public static List<Map<String, Integer>> getAnimalCounts(ACritter[][] map, int turns) {
-            List<Map<String, Integer>> animalCountsHistory = new ArrayList<>();
+        public static List<java.util.Map<String, Integer>> getAnimalCounts(ACritter[][] map, int turns) {
+            List<java.util.Map<String, Integer>> animalCountsHistory = new ArrayList<>();
 
             for (int turn = 0; turn < turns; turn++) {
-                Map<String, Integer> animalCounts = countAnimals(map);
+                java.util.Map<String, Integer> animalCounts = countAnimals(map);
                 animalCountsHistory.add(animalCounts);
 
             }
@@ -622,8 +625,8 @@ public class Mapa {
             return animalCountsHistory;
         }
 
-        private static Map<String, Integer> countAnimals(ACritter[][] map) {
-            Map<String, Integer> animalCounts = new HashMap<>();
+        private static java.util.Map<String, Integer> countAnimals(ACritter[][] map) {
+            java.util.Map<String, Integer> animalCounts = new HashMap<>();
 
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[0].length; j++) {
@@ -640,7 +643,7 @@ public class Mapa {
     }
     public class ExcelWriter {
 
-        public static void writeToExcel(List<Map<String, Integer>> animalCountsHistory) {
+        public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
             Workbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("AnimalCounts");
 
@@ -648,7 +651,7 @@ public class Mapa {
             Row headerRow = sheet.createRow(rowNum++);
             headerRow.createCell(0).setCellValue("Turn");
 
-            Map<String, Integer> firstCounts = animalCountsHistory.get(0);
+            java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
             int colNum = 1;
             for (String species : firstCounts.keySet()) {
                 headerRow.createCell(colNum++).setCellValue(species);
@@ -658,7 +661,7 @@ public class Mapa {
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(turn);
 
-                Map<String, Integer> counts = animalCountsHistory.get(turn);
+                java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
                 colNum = 1;
                 for (int count : counts.values()) {
                     row.createCell(colNum++).setCellValue(count);

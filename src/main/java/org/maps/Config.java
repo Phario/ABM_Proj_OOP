@@ -4,17 +4,17 @@ import java.util.Scanner;
 
 public class Config {
     public static int turnAmount = 0;
-    protected static int bearAmount = 0;
-    protected static int foxAmount = 0;
-    protected static int deerAmount = 0;
-    protected static int wolfAmount = 0;
-    protected static int hareAmount = 0;
-    protected static int berryAmount = 0;
-    protected static int burrowAmount = 0;
+    public static int bearAmount = 0;
+    public static int foxAmount = 0;
+    public static int deerAmount = 0;
+    public static int wolfAmount = 0;
+    public static int hareAmount = 0;
+    public static int berryAmount = 0;
+    public static int burrowAmount = 0;
     //Object amounts for sim start
 
-    protected static int mapWidth = 0;
-    protected static int mapLength = 0;
+    public static int mapWidth = 10;
+    public static int mapLength = 10;
     protected static int hungerDrain = 5;
     //Hunger drain per turn
 
