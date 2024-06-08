@@ -399,11 +399,35 @@ public class Mapa {
 
     // General method to move critters
     private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
-        int newX, newY;
-        do {
-            newX = x + random.nextInt(3) - 1; // Random number between -1 and 1
-            newY = y + random.nextInt(3) - 1; // Random number between -1 and 1
-        } while (!isValid(newX, newY, map.length, map[0].length) || map[newX][newY] != null);}
+        List<int[]> availableCells = new ArrayList<>();
+
+        // Collect available empty cells around the critter
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                int newX = x + dx;
+                int newY = y + dy;
+                if (isValid(newX, newY, map.length, map[0].length) && map[newX][newY] == null) {
+                    availableCells.add(new int[]{newX, newY});
+                }
+            }
+        }
+
+        // If there are no available cells, do not move the critter
+        if (availableCells.isEmpty()) {
+            return;
+        }
+
+        // Randomly select one available cell to move to
+        int[] newCell = availableCells.get(random.nextInt(availableCells.size()));
+        int newX = newCell[0];
+        int newY = newCell[1];
+
+        // Move the critter to the new location
+        map[x][y] = null; // Clear the current cell
+        critter.setX(newX); // Update critter's X coordinate
+        critter.setY(newY); // Update critter's Y coordinate
+        map[newX][newY] = critter; // Place the critter in the new cell
+    }
     private void environmentObjectSpawner(String objectType, int amount) {
         int rows = map.length;
         int cols = map[0].length;
@@ -433,15 +457,15 @@ public class Mapa {
     private static ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
             case "Bear":
-                return new Bear("Bear", 0.2, x, y);
+                return new Bear("Bear", bearOffspringChance, x, y);
             case "Deer":
-                return new Deer("Deer", 0.5, x, y);
+                return new Deer("Deer", deerOffspringChance, x, y);
             case "Fox":
-                return new Fox("Fox", 0.4, x, y);
+                return new Fox("Fox", foxOffspringChance, x, y);
             case "Hare":
-                return new Hare("Hare", 0.6, x, y);
+                return new Hare("Hare", hareOffspringChance, x, y);
             case "Wolf":
-                return new Wolf("Wolf", 0.3, x, y);
+                return new Wolf("Wolf", wolfOffspringChance, x, y);
             case "Berries":
                 return new Berries("Berries", 0, x, y);
             case "Burrows":
