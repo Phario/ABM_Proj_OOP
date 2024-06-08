@@ -42,7 +42,7 @@ public abstract class ACritter implements Critters {
                 try {
                     if (environmentX < 0 || environmentY < 0) continue; // Skip invalid coordinates
                     if (environmentX == this.x && environmentY == this.y) continue; // Prevents the object from detecting itself
-                    if (Mapa.getArrayObjectName(environmentX, environmentY).equals(objectName)) return Mapa.getArrayObjectID(environmentX,environmentY);
+                    if (Map.getArrayObjectName(environmentX, environmentY).equals(objectName)) return Map.getArrayObjectID(environmentX,environmentY);
                 } catch (ArrayIndexOutOfBoundsException e) {continue;}
             }
         }

@@ -2,7 +2,6 @@
 
 import org.critters.*;
 import org.maps.*;
-import java.util.ArrayList;
 
 import static org.maps.Config.*;
 
@@ -11,7 +10,7 @@ import static org.maps.Config.*;
     public static void main(String[] args) {
         config();
         for (int i = 0; i < turnAmount; i++) {
-           Mapa.turnManager(map);
+           Map.turnManager(map);
         }
     }
 }

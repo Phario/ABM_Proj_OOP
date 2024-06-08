@@ -1,7 +1,7 @@
 package org.maps;
 
 import java.util.List;
-import java.util.Map;
+
 import org.critters.*;
 import java.util.*;
 import static org.maps.Config.*;
@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class Mapa {
+public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
@@ -634,11 +634,11 @@ public class Mapa {
 
     public class AnimalCounter {
 
-        public static List<Map<String, Integer>> getAnimalCounts(ACritter[][] map, int turns) {
-            List<Map<String, Integer>> animalCountsHistory = new ArrayList<>();
+        public static List<java.util.Map<String, Integer>> getAnimalCounts(ACritter[][] map, int turns) {
+            List<java.util.Map<String, Integer>> animalCountsHistory = new ArrayList<>();
 
             for (int turn = 0; turn < turns; turn++) {
-                Map<String, Integer> animalCounts = countAnimals(map);
+                java.util.Map<String, Integer> animalCounts = countAnimals(map);
                 animalCountsHistory.add(animalCounts);
 
             }
@@ -646,8 +646,8 @@ public class Mapa {
             return animalCountsHistory;
         }
 
-        private static Map<String, Integer> countAnimals(ACritter[][] map) {
-            Map<String, Integer> animalCounts = new HashMap<>();
+        private static java.util.Map<String, Integer> countAnimals(ACritter[][] map) {
+            java.util.Map<String, Integer> animalCounts = new HashMap<>();
 
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[0].length; j++) {
@@ -664,7 +664,7 @@ public class Mapa {
     }
     public class ExcelWriter {
 
-        public static void writeToExcel(List<Map<String, Integer>> animalCountsHistory) {
+        public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
             Workbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("AnimalCounts");
 
@@ -672,7 +672,7 @@ public class Mapa {
             Row headerRow = sheet.createRow(rowNum++);
             headerRow.createCell(0).setCellValue("Turn");
 
-            Map<String, Integer> firstCounts = animalCountsHistory.get(0);
+            java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
             int colNum = 1;
             for (String species : firstCounts.keySet()) {
                 headerRow.createCell(colNum++).setCellValue(species);
@@ -682,7 +682,7 @@ public class Mapa {
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(turn);
 
-                Map<String, Integer> counts = animalCountsHistory.get(turn);
+                java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
                 colNum = 1;
                 for (int count : counts.values()) {
                     row.createCell(colNum++).setCellValue(count);
