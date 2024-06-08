@@ -53,10 +53,15 @@ public class Config {
     protected static int foxOffspringChance = 50;
     protected static int hareOffspringChance = 60;
     protected static int wolfOffspringChance = 40;
-
     //offspringChances (in %)
+
+    protected static int bearMaxAge = 20;
+    protected static int deerMaxAge = 15;
+    protected static int hareMaxAge = 10;
+    protected static int foxMaxAge = 10;
+    protected static int wolfMaxAge = 15;
     public static void config() {
-        System.out.println("Use default hunting chance/food values? (true/false):");
+        System.out.println("Use default hunting chance, food and max age values? (true/false):");
         Scanner configInput = new Scanner(System.in);
         boolean defaultValues = configInput.nextBoolean();
         if (!defaultValues) {
@@ -119,6 +124,18 @@ public class Config {
             System.out.println("Enter wolf offspringChance (in %):");
             wolfOffspringChance = configInput.nextInt();
             //offspring chance values
+
+            System.out.println("Enter bear max age (in amount of turns):");
+            bearMaxAge = configInput.nextInt();
+            System.out.println("Enter deer max age (in amount of turns):");
+            deerMaxAge = configInput.nextInt();
+            System.out.println("Enter fox max age (in amount of turns):");
+            foxMaxAge = configInput.nextInt();
+            System.out.println("Enter hare max age (in amount of turns):");
+            hareMaxAge = configInput.nextInt();
+            System.out.println("Enter wolf max age (in amount of turns):");
+            wolfMaxAge = configInput.nextInt();
+            //max age values
         }
         System.out.println("Enter map width");
         mapWidth = configInput.nextInt();

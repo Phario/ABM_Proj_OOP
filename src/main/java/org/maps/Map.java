@@ -61,6 +61,7 @@ public class Map {
             critterIDList.remove(critterIndex);
             //removes an object from an array, so it can't make 2 moves in a turn
         }
+        aging();
     }
     //takes the map as a parameter and a random number generator to
     //decide which critter moves first, then the critterTurnManager takes over so the critter can make its turn
@@ -403,7 +404,7 @@ public class Map {
     }
     //input: map and critterID
     //manages a critter's turn depending on what kind of object it is
-    //add behaviour for each critter when hunger is at 100;
+    //TODO: add behaviour for each critter when hunger is at 100;
 
     // General method to move critters
     private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
@@ -441,15 +442,15 @@ public class Map {
     private static ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
             case "Bear":
-                return new Bear("Bear", 0.2, x, y);
+                return new Bear("Bear", bearOffspringChance, x, y);
             case "Deer":
-                return new Deer("Deer", 0.5, x, y);
+                return new Deer("Deer", deerOffspringChance, x, y);
             case "Fox":
-                return new Fox("Fox", 0.4, x, y);
+                return new Fox("Fox", foxOffspringChance, x, y);
             case "Hare":
-                return new Hare("Hare", 0.6, x, y);
+                return new Hare("Hare", hareOffspringChance, x, y);
             case "Wolf":
-                return new Wolf("Wolf", 0.3, x, y);
+                return new Wolf("Wolf", wolfOffspringChance, x, y);
             case "Berries":
                 return new Berries("Berries", 0, x, y);
             case "Burrows":
@@ -556,7 +557,7 @@ public class Map {
     }
     // looks for an empty space around an animal and places a new
     // instance of the animal there with age = 0
-    private void aging() {
+    private static void aging() {
         int rows = map.length;
         int cols = map[0].length;
 
@@ -596,9 +597,9 @@ public class Map {
             }
         }
     }
-            // Usage: searches the entire map, if there is an object it increases its age, checks its species
-            // and calls PETAHandler to remove object if it's too old.
-            // if it encounters a berry nothing happens
+    // Usage: searches the entire map, if there is an object it increases its age, checks its species
+    // and calls PETAHandler to remove object if it's too old.
+    // if it encounters a berry nothing happens
 
 
     private static boolean isValid(int x, int y, int rows, int cols) {
