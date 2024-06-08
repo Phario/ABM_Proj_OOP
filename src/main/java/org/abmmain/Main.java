@@ -1,19 +1,16 @@
  package org.abmmain;
 
- import org.critters.ACritter;
- import org.maps.Map;
+import org.critters.*;
+import org.maps.*;
 
- import static org.maps.Config.*;
- import static org.maps.Map.map;
- import javax.swing.JFrame;
- import javax.swing.JPanel;
+import static org.maps.Config.*;
+
  public class Main {
+     public static ACritter[][] map;
     public static void main(String[] args) {
         config();
-        Map.startSimulation(mapLength, mapWidth, bearAmount, deerAmount, wolfAmount, hareAmount, foxAmount, berryAmount, burrowAmount);
         for (int i = 0; i < turnAmount; i++) {
-           Map.turnManager();
+           Map.turnManager(map);
         }
-        System.out.println(map[1][1].getSpecies());
     }
 }

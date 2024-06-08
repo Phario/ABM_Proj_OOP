@@ -19,16 +19,8 @@ public class Map {
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
     //simulation initialization
-        map = new ACritter[mapSizeX][mapSizeY];
-        environmentObjectSpawner("Bear", bearAmount);
-        environmentObjectSpawner("Deer", deerAmount);
-        environmentObjectSpawner("Fox", foxAmount);
-        environmentObjectSpawner("Hare", hareAmount);
-        environmentObjectSpawner("Wolf", wolfAmount);
-        environmentObjectSpawner("Berries", berryAmount);
-        environmentObjectSpawner("Burrow", burrowAmount);
     }
-    public static void turnManager() {
+    public static void turnManager(ACritter[][] map) {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
@@ -61,7 +53,6 @@ public class Map {
             critterIDList.remove(critterIndex);
             //removes an object from an array, so it can't make 2 moves in a turn
         }
-        aging();
     }
     //takes the map as a parameter and a random number generator to
     //decide which critter moves first, then the critterTurnManager takes over so the critter can make its turn
@@ -404,16 +395,40 @@ public class Map {
     }
     //input: map and critterID
     //manages a critter's turn depending on what kind of object it is
-    //TODO: add behaviour for each critter when hunger is at 100;
+    //add behaviour for each critter when hunger is at 100;
 
     // General method to move critters
     private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
-        int newX, newY;
-        do {
-            newX = x + random.nextInt(3) - 1; // Random number between -1 and 1
-            newY = y + random.nextInt(3) - 1; // Random number between -1 and 1
-        } while (!isValid(newX, newY, map.length, map[0].length) || map[newX][newY] != null);}
-    private static void environmentObjectSpawner(String objectType, int amount) {
+        List<int[]> availableCells = new ArrayList<>();
+
+        // Collect available empty cells around the critter
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                int newX = x + dx;
+                int newY = y + dy;
+                if (isValid(newX, newY, map.length, map[0].length) && map[newX][newY] == null) {
+                    availableCells.add(new int[]{newX, newY});
+                }
+            }
+        }
+
+        // If there are no available cells, do not move the critter
+        if (availableCells.isEmpty()) {
+            return;
+        }
+
+        // Randomly select one available cell to move to
+        int[] newCell = availableCells.get(random.nextInt(availableCells.size()));
+        int newX = newCell[0];
+        int newY = newCell[1];
+
+        // Move the critter to the new location
+        map[x][y] = null; // Clear the current cell
+        critter.setX(newX); // Update critter's X coordinate
+        critter.setY(newY); // Update critter's Y coordinate
+        map[newX][newY] = critter; // Place the critter in the new cell
+    }
+    private void environmentObjectSpawner(String objectType, int amount) {
         int rows = map.length;
         int cols = map[0].length;
 
@@ -462,7 +477,7 @@ public class Map {
         // Input: coordinates and species
         // Usage: creates an object of the given coordinates and species
     }
-    public void startExampleSimulation() {
+    public void startSimulation() {
         int N = 10;
         int M = 10;
                     map = new ACritter[N][M];
@@ -557,7 +572,12 @@ public class Map {
     }
     // looks for an empty space around an animal and places a new
     // instance of the animal there with age = 0
-    private static void aging() {
+    private void dataCollector() {
+    //figure out how to save data to a file so a graph can be made later
+    }
+    //at the end of every turn opens a file, writes the data such as amount of objects
+    //and closes the file in case you wanted to stop the simulation early
+    private void aging() {
         int rows = map.length;
         int cols = map[0].length;
 
@@ -597,9 +617,9 @@ public class Map {
             }
         }
     }
-    // Usage: searches the entire map, if there is an object it increases its age, checks its species
-    // and calls PETAHandler to remove object if it's too old.
-    // if it encounters a berry nothing happens
+            // Usage: searches the entire map, if there is an object it increases its age, checks its species
+            // and calls PETAHandler to remove object if it's too old.
+            // if it encounters a berry nothing happens
 
 
     private static boolean isValid(int x, int y, int rows, int cols) {
