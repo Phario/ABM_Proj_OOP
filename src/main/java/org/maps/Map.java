@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
+
+
 public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
@@ -613,21 +615,11 @@ public class Map {
         return map[x][y].getCritterID();
     }
 
+
     public class AnimalCounter {
+        private static List<java.util.Map<String, Integer>> animalCountsHistory = new ArrayList<>();
 
-        public static List<java.util.Map<String, Integer>> getAnimalCounts(ACritter[][] map, int turns) {
-            List<java.util.Map<String, Integer>> animalCountsHistory = new ArrayList<>();
-
-            for (int turn = 0; turn < turns; turn++) {
-                java.util.Map<String, Integer> animalCounts = countAnimals(map);
-                animalCountsHistory.add(animalCounts);
-
-            }
-
-            return animalCountsHistory;
-        }
-
-        private static java.util.Map<String, Integer> countAnimals(ACritter[][] map) {
+        public static void countAnimals(ACritter[][] map) {
             java.util.Map<String, Integer> animalCounts = new HashMap<>();
 
             for (int i = 0; i < map.length; i++) {
@@ -640,46 +632,53 @@ public class Map {
                 }
             }
 
-            return animalCounts;
+            animalCountsHistory.add(animalCounts);
+        }
+
+        public static List<java.util.Map<String, Integer>> getAnimalCountsHistory() {
+            return animalCountsHistory;
         }
     }
 
-    public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("AnimalCounts");
+    public class ExcelWriter {
+        public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("AnimalCounts");
 
-        int rowNum = 0;
-        Row headerRow = sheet.createRow(rowNum++);
-        headerRow.createCell(0).setCellValue("Turn");
+            int rowNum = 0;
+            Row headerRow = sheet.createRow(rowNum++);
+            headerRow.createCell(0).setCellValue("Turn");
 
-        java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
-        int colNum = 1;
-        for (String species : firstCounts.keySet()) {
-            headerRow.createCell(colNum++).setCellValue(species);
-        }
+            if (!animalCountsHistory.isEmpty()) {
+                java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
+                int colNum = 1;
+                for (String species : firstCounts.keySet()) {
+                    headerRow.createCell(colNum++).setCellValue(species);
+                }
 
-        for (int turn = 0; turn < animalCountsHistory.size(); turn++) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(turn);
+                for (int turn = 0; turn < animalCountsHistory.size(); turn++) {
+                    Row row = sheet.createRow(rowNum++);
+                    row.createCell(0).setCellValue(turn);
 
-            java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
-            colNum = 1;
-            for (int count : counts.values()) {
-                row.createCell(colNum++).setCellValue(count);
+                    java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
+                    colNum = 1;
+                    for (int count : counts.values()) {
+                        row.createCell(colNum++).setCellValue(count);
+                    }
+                }
+            }
+
+            try (FileOutputStream fileOut = new FileOutputStream("AnimalCounts.xlsx")) {
+                workbook.write(fileOut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        // output of the file
-        try (FileOutputStream fileOut = new FileOutputStream("AnimalCounts.xlsx")) {
-            workbook.write(fileOut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            workbook.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
-
 }
