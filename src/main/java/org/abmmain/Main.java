@@ -1,19 +1,19 @@
 package org.abmmain;
 
-import org.critters.ACritter;
 import org.maps.Map;
-
+import org.maps.Board;
 import static org.maps.Config.*;
-import static org.maps.Map.map;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 public class Main {
     public static void main(String[] args) {
         config();
-        Map.startSimulation(mapLength, mapWidth, bearAmount, deerAmount, wolfAmount, hareAmount, foxAmount, berryAmount, burrowAmount);
+        Map.startSimulation(mapLength, mapHeight, bearAmount, deerAmount, wolfAmount, hareAmount, foxAmount, berryAmount, burrowAmount);
+        Board.startMap();
         for (int i = 0; i < turnAmount; i++) {
+            //open JFrame and paint it with adequate colours
+            //call to data-saving method
             Map.turnManager();
+            //repaint JFrame
         }
-        System.out.println(map[1][1].getSpecies());
     }
 }

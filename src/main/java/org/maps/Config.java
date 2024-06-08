@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Config {
     public static int turnAmount = 0;
+    public static int turnInterval = 10;
     public static int bearAmount = 0;
     public static int foxAmount = 0;
     public static int deerAmount = 0;
@@ -13,8 +14,8 @@ public class Config {
     public static int burrowAmount = 0;
     //Object amounts for sim start
 
-    public static int mapWidth = 10;
     public static int mapLength = 10;
+    public static int mapHeight = 10;
     protected static int hungerDrain = 5;
     //Hunger drain per turn
 
@@ -138,11 +139,13 @@ public class Config {
             //max age values
         }
         System.out.println("Enter map width");
-        mapWidth = configInput.nextInt();
+        mapHeight = configInput.nextInt();
         System.out.println("Enter map length");
         mapLength = configInput.nextInt();
         System.out.println("Enter the amount of turns:");
         turnAmount = configInput.nextInt();
+        System.out.println("Enter the time between turns:");
+        turnInterval = configInput.nextInt();
         System.out.println("Enter the amount of bears:");
         bearAmount = configInput.nextInt();
         System.out.println("Enter the amount of deer:");

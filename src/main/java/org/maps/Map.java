@@ -403,7 +403,7 @@ public class Map {
     }
     //input: map and critterID
     //manages a critter's turn depending on what kind of object it is
-    //add behaviour for each critter when hunger is at 100;
+    //TODO: add hunger cap
 
     // General method to move critters
     private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
@@ -476,7 +476,7 @@ public class Map {
                 return new Wolf("Wolf", wolfOffspringChance, x, y);
             case "Berries":
                 return new Berries("Berries", 0, x, y);
-            case "Burrows":
+            case "Burrow":
                 return new Burrows("Burrow", 0, x, y);
             default:
                 System.out.println("Unknown type: " + objectType);
@@ -484,22 +484,6 @@ public class Map {
         }
         // Input: coordinates and species
         // Usage: creates an object of the given coordinates and species
-    }
-    public void startExampleSimulation() {
-        int N = 10;
-        int M = 10;
-                    map = new ACritter[N][M];
-
-                    // Example population of the map
-                    map[0][0] = new Bear("Bear", 0.02, 0, 0);
-                    map[0][1] = new Deer("Deer", 0.05, 0, 1);
-                    map[1][0] = new Fox("Fox", 0.03, 1, 0);
-                    System.out.println(map[1][0].getSpecies());
-
-                    // Example call to environmentObjectSpawner
-                    environmentObjectSpawner("Bear", 5);
-                    environmentObjectSpawner("Deer", 5);
-                    environmentObjectSpawner("Fox", 5);
     }
     private static void PETAHandler(int critterID) {
         int rows = map.length;
@@ -514,8 +498,6 @@ public class Map {
             }
         }
     }
-    // removes an object from the map, needs  ID
-
     // Input:   ID
     // Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
     private static void breeder( Integer critterID) {
@@ -579,11 +561,6 @@ public class Map {
     }
     // looks for an empty space around an animal and places a new
     // instance of the animal there with age = 0
-    private void dataCollector() {
-    //figure out how to save data to a file so a graph can be made later
-    }
-    //at the end of every turn opens a file, writes the data such as amount of objects
-    //and closes the file in case you wanted to stop the simulation early
     private static void aging() {
         int rows = map.length;
         int cols = map[0].length;
@@ -623,10 +600,8 @@ public class Map {
             }
         }
     }
-            // Usage: searches the entire map, if there is an object it increases its age, checks its species
-            // and calls PETAHandler to remove object if it's too old.
-            // if it encounters a berry nothing happens
-
+    // Usage: searches the entire map, if there is an object it increases its age, checks its species
+    // and calls PETAHandler to remove object if it's too old.
 
     private static boolean isValid(int x, int y, int rows, int cols) {
         return x >= 0 && x < rows && y >= 0 && y < cols;
@@ -668,45 +643,43 @@ public class Map {
             return animalCounts;
         }
     }
-    public class ExcelWriter {
 
-        public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
-            Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("AnimalCounts");
+    public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("AnimalCounts");
 
-            int rowNum = 0;
-            Row headerRow = sheet.createRow(rowNum++);
-            headerRow.createCell(0).setCellValue("Turn");
+        int rowNum = 0;
+        Row headerRow = sheet.createRow(rowNum++);
+        headerRow.createCell(0).setCellValue("Turn");
 
-            java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
-            int colNum = 1;
-            for (String species : firstCounts.keySet()) {
-                headerRow.createCell(colNum++).setCellValue(species);
-            }
+        java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
+        int colNum = 1;
+        for (String species : firstCounts.keySet()) {
+            headerRow.createCell(colNum++).setCellValue(species);
+        }
 
-            for (int turn = 0; turn < animalCountsHistory.size(); turn++) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(turn);
+        for (int turn = 0; turn < animalCountsHistory.size(); turn++) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(turn);
 
-                java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
-                colNum = 1;
-                for (int count : counts.values()) {
-                    row.createCell(colNum++).setCellValue(count);
-                }
-            }
-
-            // output of the file
-            try (FileOutputStream fileOut = new FileOutputStream("AnimalCounts.xlsx")) {
-                workbook.write(fileOut);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                workbook.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
+            colNum = 1;
+            for (int count : counts.values()) {
+                row.createCell(colNum++).setCellValue(count);
             }
         }
+
+        // output of the file
+        try (FileOutputStream fileOut = new FileOutputStream("AnimalCounts.xlsx")) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

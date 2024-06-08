@@ -42,7 +42,8 @@ public abstract class ACritter implements Critters {
                 try {
                     if (environmentX < 0 || environmentY < 0) continue; // Skip invalid coordinates
                     if (environmentX == this.x && environmentY == this.y) continue; // Prevents the object from detecting itself
-                    if (Map.getArrayObjectName(environmentX, environmentY).equals(objectName)) return Map.getArrayObjectID(environmentX,environmentY);
+                    if (Map.map[environmentX][environmentY] == null) return 0;
+                    else if (Map.getArrayObjectName(environmentX, environmentY).equals(objectName)) return Map.getArrayObjectID(environmentX,environmentY);
                 } catch (ArrayIndexOutOfBoundsException e) {continue;}
             }
         }
@@ -73,7 +74,7 @@ public abstract class ACritter implements Critters {
     public double getOffspringChance() {
         return offspringChance;
     }
-    public String getSpecies() {return Species; }
+    public String getSpecies() {return Species;}
     public void setSpecies() {this.Species = Species; }
     public static int getGlobalCritterID() {
         return globalCritterID;
