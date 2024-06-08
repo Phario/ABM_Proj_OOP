@@ -18,9 +18,16 @@ public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
-    //simulation initialization
+        map = new ACritter[mapSizeX][mapSizeY];
+        environmentObjectSpawner("Bear", bearAmount);
+        environmentObjectSpawner("Deer", deerAmount);
+        environmentObjectSpawner("Fox", foxAmount);
+        environmentObjectSpawner("Hare", hareAmount);
+        environmentObjectSpawner("Wolf", wolfAmount);
+        environmentObjectSpawner("Berries", berryAmount);
+        environmentObjectSpawner("Burrow", burrowAmount);
     }
-    public static void turnManager(ACritter[][] map) {
+    public static void turnManager() {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
@@ -53,6 +60,7 @@ public class Map {
             critterIDList.remove(critterIndex);
             //removes an object from an array, so it can't make 2 moves in a turn
         }
+        aging();
     }
     //takes the map as a parameter and a random number generator to
     //decide which critter moves first, then the critterTurnManager takes over so the critter can make its turn
@@ -428,7 +436,7 @@ public class Map {
         critter.setY(newY); // Update critter's Y coordinate
         map[newX][newY] = critter; // Place the critter in the new cell
     }
-    private void environmentObjectSpawner(String objectType, int amount) {
+    private static void environmentObjectSpawner(String objectType, int amount) {
         int rows = map.length;
         int cols = map[0].length;
 
@@ -477,7 +485,7 @@ public class Map {
         // Input: coordinates and species
         // Usage: creates an object of the given coordinates and species
     }
-    public void startSimulation() {
+    public void startExampleSimulation() {
         int N = 10;
         int M = 10;
                     map = new ACritter[N][M];
@@ -493,7 +501,6 @@ public class Map {
                     environmentObjectSpawner("Deer", 5);
                     environmentObjectSpawner("Fox", 5);
     }
-    //method that WILL ask the user to input simulation start data, trust me bro.
     private static void PETAHandler(int critterID) {
         int rows = map.length;
         int columns = map[0].length;
@@ -577,37 +584,36 @@ public class Map {
     }
     //at the end of every turn opens a file, writes the data such as amount of objects
     //and closes the file in case you wanted to stop the simulation early
-    private void aging() {
+    private static void aging() {
         int rows = map.length;
         int cols = map[0].length;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (map[i][j] != null) {
-                    ACritter critter = map[i][j];
-                    critter.setAge(critter.getAge() + 1);
+                    map[i][j].setAge(map[i][j].getAge() + 1);
 
-                    switch (critter.getSpecies()) {
+                    switch (map[i][j].getSpecies()) {
                         case "Bear":
-                            if(critter.getAge()>20){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>bearMaxAge){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Deer":
-                            if(critter.getAge()>10){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>deerMaxAge){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Fox":
-                            if(critter.getAge()>4){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>foxMaxAge){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Hare":
-                            if(critter.getAge()>4){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>hareMaxAge){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Wolf":
-                            if(critter.getAge()>10){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>wolfMaxAge){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Berries":
-                            if(critter.getAge()>3){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>berryLife){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Burrow":
-                            if(critter.getAge()>3){PETAHandler(critter.getCritterID());}
+                            if(map[i][j].getAge()>burrowLife){PETAHandler(map[i][j].getCritterID());}
                             break;
                         default:
                             break;
