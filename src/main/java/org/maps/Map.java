@@ -658,7 +658,10 @@ public class Map {
         }
     }
 
+
+
     public class ExcelWriter {
+
         public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("AnimalCounts");
@@ -675,21 +678,23 @@ public class Map {
                 for (String species : firstCounts.keySet()) {
                     headerRow.createCell(colNum++).setCellValue(species);
                 }
-                   // Write data for each turn
+
+                // Write data for each turn
                 for (int turn = 0; turn < animalCountsHistory.size(); turn++) {
                     Row row = sheet.createRow(rowNum++);
                     row.createCell(0).setCellValue(turn);
 
                     java.util.Map<String, Integer> counts = animalCountsHistory.get(turn);
                     colNum = 1;
-                    for (int count : counts.values()) {
-                        row.createCell(colNum++).setCellValue(count);
+                    for (String species : firstCounts.keySet()) {
+                        row.createCell(colNum++).setCellValue(counts.getOrDefault(species, 0));
                     }
                 }
             }
 
-            //Add a chart
+            // Add a chart
             createChart(sheet, workbook, animalCountsHistory);
+
             // Get a unique file name to avoid overwriting existing files
             String fileName = getUniqueFileName("AnimalCounts.xlsx");
 
@@ -706,75 +711,58 @@ public class Map {
             }
         }
 
-        // Method to create a line chart in the Excel sheet
+        // Helper method to create a chart
         private static void createChart(XSSFSheet sheet, XSSFWorkbook workbook, List<java.util.Map<String, Integer>> animalCountsHistory) {
-            // Create a drawing area on the Excel sheet
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
-            // Set the anchor for the chart (position and size of the chart on the sheet)
             XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, sheet.getLastRowNum() + 2, 10, sheet.getLastRowNum() + 20);
 
-            // Create the chart
             XSSFChart chart = drawing.createChart(anchor);
-            chart.setTitleText("Animal Population Over Time"); // Set the chart title
-            chart.setTitleOverlay(false); // Title does not overlay the chart
+            chart.setTitleText("Animal Population Over Time");
+            chart.setTitleOverlay(false);
 
-            // Create and set the legend for the chart
             XDDFChartLegend legend = chart.getOrAddLegend();
-            legend.setPosition(LegendPosition.TOP_RIGHT); // Position the legend at the top right
+            legend.setPosition(LegendPosition.TOP_RIGHT);
 
-            // Create the category axis (horizontal) and set its title
             XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
-            bottomAxis.setTitle("Turn"); // Title for the horizontal axis
-
-            // Create the value axis (vertical) and set its title
+            bottomAxis.setTitle("Turn");
             XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
-            leftAxis.setTitle("Population"); // Title for the vertical axis
+            leftAxis.setTitle("Population");
 
-            // Create the data source for the X-axis (turns)
             XDDFNumericalDataSource<Double> turns = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), 0, 0));
 
-            // Retrieve the data for the first turn (needed to initialize the data series)
             java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
-            int colNum = 1; // Column number starting from 1 (column 0 is for turns)
-
-            // Create data for the line chart
+            int colNum = 1;
             XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
-
-            // Add data series for each species
             for (String species : firstCounts.keySet()) {
-                // Create the data source for the population of the species
                 XDDFNumericalDataSource<Double> population = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), colNum, colNum));
-
-                // Create the data series and add it to the chart
                 XDDFLineChartData.Series series = (XDDFLineChartData.Series) data.addSeries(turns, population);
-                series.setTitle(species, null); // Set the title of the data series (species name)
-                series.setMarkerStyle(MarkerStyle.NONE); // No markers, just lines
-
+                series.setTitle(species, null);
+                series.setMarkerStyle(MarkerStyle.NONE); // no marks, just lines
                 colNum++;
             }
 
-            // Plot the chart with the data
             chart.plot(data);
         }
+
+        // Helper method to get a unique file name to avoid overwriting existing files
         private static String getUniqueFileName(String baseName) {
             String fileName = baseName;
             String fileExtension = "";
-            // Find the last dot in the file name to separate the name from the extension
             int dotIndex = baseName.lastIndexOf('.');
             if (dotIndex > 0) {
-                fileName = baseName.substring(0, dotIndex); // The part of the file name before the period
-                fileExtension = baseName.substring(dotIndex); // The part of the file name after the period
+                fileName = baseName.substring(0, dotIndex);
+                fileExtension = baseName.substring(dotIndex);
             }
 
             int counter = 1;
             File file = new File(fileName + fileExtension);
-            // As long as a file with that name exists, increase the counter and create a new name
             while (file.exists()) {
-                file = new File(fileName + counter + fileExtension);// New counter file name
+                file = new File(fileName + counter + fileExtension);
                 counter++;
             }
-            // Return the absolute path to a new unique file
+
             return file.getAbsolutePath();
         }
     }
 }
+
