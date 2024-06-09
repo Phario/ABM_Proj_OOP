@@ -639,7 +639,9 @@ public class Map {
                     ACritter critter = map[i][j];
                     if (critter != null) {
                         String species = critter.getSpecies();
-                        animalCounts.put(species, animalCounts.getOrDefault(species, 0) + 1);
+                       // if (!species.equals("Burrow") && !species.equals("Berries")) { // Skips burrows and berries
+                            animalCounts.put(species, animalCounts.getOrDefault(species, 0) + 1);
+                       // }
                     }
                 }
             }
@@ -723,6 +725,7 @@ public class Map {
                 XDDFNumericalDataSource<Double> population = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), colNum, colNum));
                 XDDFLineChartData.Series series = (XDDFLineChartData.Series) data.addSeries(turns, population);
                 series.setTitle(species, null);
+                series.setMarkerStyle(MarkerStyle.NONE);//no marks, just lines
                 colNum++;
             }
 
