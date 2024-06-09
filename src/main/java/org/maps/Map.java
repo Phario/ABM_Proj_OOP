@@ -455,11 +455,10 @@ public class Map {
 
         for (int i = 0; i < amount; i++) {
             boolean placed = false;
-
+            int attemptNo = 0;
             while (!placed) {
                 int x = random.nextInt(rows);
                 int y = random.nextInt(cols);
-
                 if (map[x][y] == null) {
                     ACritter newCritter = createCritter(objectType, x, y);
                     if (newCritter != null) {
@@ -467,6 +466,8 @@ public class Map {
                         placed = true;
                     }
                 }
+                attemptNo += 1;
+                if (attemptNo > 30) break;
             }
         }
     }
