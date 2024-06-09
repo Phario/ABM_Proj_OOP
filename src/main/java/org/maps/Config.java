@@ -3,20 +3,27 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 10;
-    public static int turnInterval = 1000;
-    public static int bearAmount = 0;
-    public static int foxAmount = 150;
-    public static int deerAmount = 0;
+    public static int turnAmount = 70;
+    public static int turnInterval = 10;
+    public static int bearAmount = 50;
+    public static int foxAmount = 50;
+    public static int deerAmount = 50;
     public static int wolfAmount = 0;
-    public static int hareAmount = 1;
-    public static int berryAmount = 0;
-    public static int burrowAmount = 0;
+    public static int hareAmount = 50;
+    public static int berryAmount = 100;
+    public static int burrowAmount = 30;
     //Object amounts for sim start
 
-    public static int mapLength = 50;
-    public static int mapHeight = 50;
-    protected static int hungerDrain = 0;
+    protected static int berryRespawnRate = 2;
+    //amount of berries spawned per turn
+
+    protected static int burrowLife = 100;
+    protected static int berryLife = 30;
+    //non-movable object lifetimes
+
+    public static int mapLength = 80;
+    public static int mapHeight = 80;
+    protected static int hungerDrain = 2;
     //Hunger drain per turn
 
     protected static int bearVsDeer = 80;
@@ -31,7 +38,7 @@ public class Config {
     protected static int wolfVsFox = 80;
     //Wolf hunting success chance variables (in %)
 
-    protected static int foxVsHare = 100;
+    protected static int foxVsHare = 90;
     //Fox hunting success chance variables (in %)
 
     protected static int bearFoodValue = 100;
@@ -42,25 +49,18 @@ public class Config {
     protected static int berriesFoodValue = 40;
     //food values
 
-    protected static int burrowLife = 3;
-    protected static int berryLife = 20;
-    //non-movable object lifetimes
-
-    protected static int berryRespawnRate = 2;
-    //amount of berries spawned per turn
-
-    protected static int bearOffspringChance = 60;
-    protected static int deerOffspringChance = 60;
-    protected static int foxOffspringChance = 100;
-    protected static int hareOffspringChance = 0;
-    protected static int wolfOffspringChance = 60;
+    protected static int bearOffspringChance = 30;
+    protected static int deerOffspringChance = 50;
+    protected static int foxOffspringChance = 50;
+    protected static int hareOffspringChance = 50;
+    protected static int wolfOffspringChance = 50;
     //offspringChances (in %)
 
-    protected static int bearMaxAge = 300;
-    protected static int deerMaxAge = 250;
-    protected static int hareMaxAge = 200;
-    protected static int foxMaxAge = 200;
-    protected static int wolfMaxAge = 250;
+    protected static int bearMaxAge = 90;
+    protected static int deerMaxAge = 90;
+    protected static int hareMaxAge = 90;
+    protected static int foxMaxAge = 90;
+    protected static int wolfMaxAge = 90;
     public static void config() {
         Scanner configInput = new Scanner(System.in);
         System.out.println("Quick setup? (true/false)");
