@@ -3,15 +3,15 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 40;
-    public static int turnInterval = 50;
-    public static int bearAmount = 10;
-    public static int foxAmount = 10;
-    public static int deerAmount = 10;
-    public static int wolfAmount = 10;
-    public static int hareAmount = 10;
-    public static int berryAmount = 10;
-    public static int burrowAmount = 5;
+    public static int turnAmount = 80;
+    public static int turnInterval = 1000;
+    public static int bearAmount = 0;
+    public static int foxAmount = 50;
+    public static int deerAmount = 0;
+    public static int wolfAmount = 0;
+    public static int hareAmount = 50;
+    public static int berryAmount = 0;
+    public static int burrowAmount = 0;
     //Object amounts for sim start
 
     public static int mapLength = 80;
@@ -20,18 +20,18 @@ public class Config {
     //Hunger drain per turn
 
     protected static int bearVsDeer = 80;
-    protected static int bearVsWolf = 60;
-    protected static int bearVsHare = 50;
-    protected static int bearVsFox = 50;
+    protected static int bearVsWolf = 70;
+    protected static int bearVsHare = 70;
+    protected static int bearVsFox = 70;
     //Bear hunting success chance variables (in %)
 
     protected static int wolfVsBear = 30;
-    protected static int wolfVsDeer = 60;
-    protected static int wolfVsHare = 70;
-    protected static int wolfVsFox = 70;
+    protected static int wolfVsDeer = 80;
+    protected static int wolfVsHare = 80;
+    protected static int wolfVsFox = 80;
     //Wolf hunting success chance variables (in %)
 
-    protected static int foxVsHare = 80;
+    protected static int foxVsHare = 100;
     //Fox hunting success chance variables (in %)
 
     protected static int bearFoodValue = 100;
@@ -43,16 +43,16 @@ public class Config {
     //food values
 
     protected static int burrowLife = 3;
-    protected static int berryLife = 3;
+    protected static int berryLife = 20;
     //non-movable object lifetimes
 
-    protected static int berryRespawnRate = 1;
+    protected static int berryRespawnRate = 2;
     //amount of berries spawned per turn
 
     protected static int bearOffspringChance = 60;
     protected static int deerOffspringChance = 60;
-    protected static int foxOffspringChance = 70;
-    protected static int hareOffspringChance = 80;
+    protected static int foxOffspringChance = 0;
+    protected static int hareOffspringChance = 0;
     protected static int wolfOffspringChance = 60;
     //offspringChances (in %)
 

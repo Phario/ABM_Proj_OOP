@@ -23,8 +23,8 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        //g2.setColor(Color.GREEN);
-        //g2.fillRect(0, 0, getWidth(), getHeight());
+        g2.setColor(new Color(51, 114, 11));
+        g2.fillRect(0, 0, getWidth(), getHeight());
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] != null) {
@@ -51,6 +51,10 @@ public class Board extends JPanel {
                             break;
                         case "Berries":
                             g2.setColor(Color.BLUE);
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                        case "Burrow":
+                            g2.setColor(Color.BLACK);
                             g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
                             break;
                     }

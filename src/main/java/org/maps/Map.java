@@ -26,7 +26,8 @@ import java.io.File;
 
 public class Map {
     private static Random random = new Random();
-    public static ACritter[][] map;             //map that contains the instances of ACritter subclasses
+    public static ACritter[][] map;
+    //map that contains the instances of ACritter subclasses
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
         map = new ACritter[mapSizeX][mapSizeY];
         environmentObjectSpawner("Bear", bearAmount);
@@ -37,7 +38,7 @@ public class Map {
         environmentObjectSpawner("Berries", berryAmount);
         environmentObjectSpawner("Burrow", burrowAmount);
     }
-    public static void turnManager(ACritter[][] map) {
+    public static void turnManager(ACritter[][] map) throws InterruptedException {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
@@ -71,9 +72,10 @@ public class Map {
             //removes an object from an array, so it can't make 2 moves in a turn
         }
         aging();
-        for (int i = 0; i <= berryRespawnRate; i++) {
+        for (int i = 0; i < berryRespawnRate; i++) {
             environmentObjectSpawner("Berries",1);
         }
+        Thread.sleep(turnInterval);
     }
     //takes the map as a parameter and a random number generator to
     //decide which critter moves first, then the critterTurnManager takes over so the critter can make its turn
@@ -400,7 +402,7 @@ public class Map {
                         default:
                             break;
                     }
-                    // Decrease hunger by hungerDrain at the beginning of the turn
+                    // Decrease hunger by hungerDrain at the end of a turn
                     critter.setHunger(critter.getHunger() - hungerDrain);
 
                     // If hunger reaches 0 or below, remove the critter
@@ -416,9 +418,8 @@ public class Map {
     }
     //input: map and critterID
     //manages a critter's turn depending on what kind of object it is
-    //TODO: add hunger cap
 
-    // General method to move critters
+    //General method to move critters
     private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
         List<int[]> availableCells = new ArrayList<>();
 
@@ -496,21 +497,21 @@ public class Map {
         // Input: coordinates and species
         // Usage: creates an object of the given coordinates and species
     }
-    private static void PETAHandler(int critterID) {
+    private static void PETAHandler(Integer critterID) {
         int rows = map.length;
         int columns = map[0].length;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (map[i][j] != null && map[i][j].getCritterID() == critterID) {
+                if (map[i][j] != null && map[i][j].getCritterID().equals(critterID)) {
                     map[i][j] = null;
                     return;
                 }
             }
         }
     }
-    // Input:   ID
-    // Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
+    //Input:   ID
+    //Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
     private static void breeder( Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -570,8 +571,8 @@ public class Map {
             }
         }
     }
-    // looks for an empty space around an animal and places a new
-    // instance of the animal there with age = 0
+    //looks for an empty space around an animal and places a new
+    //instance of the animal there with age = 0
     private static void aging() {
         int rows = map.length;
         int cols = map[0].length;
@@ -611,8 +612,8 @@ public class Map {
             }
         }
     }
-    // Usage: searches the entire map, if there is an object it increases its age, checks its species
-    // and calls PETAHandler to remove object if it's too old.
+    //Usage: searches the entire map, if there is an object it increases its age, checks its species
+    //and calls PETAHandler to remove object if it's too old.
 
     private static boolean isValid(int x, int y, int rows, int cols) {
         return x >= 0 && x < rows && y >= 0 && y < cols;
@@ -636,9 +637,9 @@ public class Map {
                     ACritter critter = map[i][j];
                     if (critter != null) {
                         String species = critter.getSpecies();
-                       // if (!species.equals("Burrow") && !species.equals("Berries")) { // Skips burrows and berries
+                       //if (!species.equals("Burrow") && !species.equals("Berries")) { // Skips burrows and berries
                             animalCounts.put(species, animalCounts.getOrDefault(species, 0) + 1);
-                       // }
+                       //}
                     }
                 }
             }
@@ -679,7 +680,7 @@ public class Map {
                 }
             }
 
-            // Add a chart
+            //Add a chart
             createChart(sheet, workbook, animalCountsHistory);
 
             String fileName = getUniqueFileName("AnimalCounts.xlsx");

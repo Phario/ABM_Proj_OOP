@@ -7,9 +7,10 @@ import java.util.List;
 
 import static org.maps.Config.*;
 import static org.maps.Map.map;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         config();
         Map.startSimulation(mapLength, mapHeight, bearAmount, deerAmount, wolfAmount, hareAmount, foxAmount, berryAmount, burrowAmount);
         Board.startMap();
