@@ -3,14 +3,14 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 70;
+    public static int turnAmount = 80;
     public static int turnInterval = 50;
-    public static int bearAmount = 50;
-    public static int foxAmount = 50;
-    public static int deerAmount = 50;
-    public static int wolfAmount = 0;
-    public static int hareAmount = 50;
-    public static int berryAmount = 100;
+    public static int bearAmount = 30;
+    public static int foxAmount = 30;
+    public static int deerAmount = 30;
+    public static int wolfAmount = 30;
+    public static int hareAmount = 30;
+    public static int berryAmount = 30;
     public static int burrowAmount = 30;
     //Object amounts for sim start
 

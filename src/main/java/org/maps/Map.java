@@ -167,7 +167,7 @@ public class Map {
                                     if (critterFound) break;
                                 }
                             }
-                            if(map[i][j].scanEnvironment("Wolf") != 0){
+                            /*if(map[i][j].scanEnvironment("Wolf") != 0){
                                 Integer preyID = map[i][j].scanEnvironment("Wolf");
                                 boolean critterFound = false;
                                 for (int k = i-1; k <= i+1; k++) {
@@ -190,7 +190,7 @@ public class Map {
                                     }
                                     if (critterFound) break;
                                 }
-                            }
+                            }*/
                             if(map[i][j].scanEnvironment("Berries") != 0){
                                 Integer preyID = map[i][j].scanEnvironment("Berries");
                                 boolean critterFound = false;
@@ -297,7 +297,7 @@ public class Map {
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Wolf":
-                            if(map[i][j].scanEnvironment("Bear") != 0){
+                            /*if(map[i][j].scanEnvironment("Bear") != 0){
                                 Integer preyID = map[i][j].scanEnvironment("Wolf");
                                 boolean critterFound = false;
                                 for (int k = i-1; k <= i+1; k++) {
@@ -320,7 +320,7 @@ public class Map {
                                     }
                                     if (critterFound) break;
                                 }
-                            }
+                            }*/
                             if(map[i][j].scanEnvironment("Deer") != 0){
                                 Integer preyID = map[i][j].scanEnvironment("Deer");
                                 boolean critterFound = false;
