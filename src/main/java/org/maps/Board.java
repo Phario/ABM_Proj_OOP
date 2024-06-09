@@ -20,15 +20,14 @@ public class Board extends JPanel {
     }
 
     public void paintMap() {
-        repaint();  // `repaint()` instead of `forest.repaint()`
+        repaint();
 
         for (int i = 0; i < mapLength; i++) {
             for (int j = 0; j < mapHeight; j++) {
                 switch (map[i][j].getSpecies()) {
                     case "Bear":
-                        // Handle Bear drawing
+                        //paint a brown rectangle at [i][j]
                         break;
-                    // Add other species handling here
                 }
             }
         }

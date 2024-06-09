@@ -3,7 +3,7 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 200;
+    public static int turnAmount = 80;
     public static int turnInterval = 1;
     public static int bearAmount = 10;
     public static int foxAmount = 10;
