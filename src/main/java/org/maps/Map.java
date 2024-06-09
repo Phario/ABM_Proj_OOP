@@ -13,6 +13,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFChart;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xddf.usermodel.chart.*;
+import java.io.File;
+
 
 
 
@@ -642,8 +650,8 @@ public class Map {
 
     public class ExcelWriter {
         public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
-            Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("AnimalCounts");
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("AnimalCounts");
 
             int rowNum = 0;
             Row headerRow = sheet.createRow(rowNum++);
@@ -668,7 +676,12 @@ public class Map {
                 }
             }
 
-            try (FileOutputStream fileOut = new FileOutputStream("AnimalCounts.xlsx")) {
+            // Add a chart
+            createChart(sheet, workbook, animalCountsHistory);
+
+            String fileName = getUniqueFileName("AnimalCounts.xlsx");
+
+            try (FileOutputStream fileOut = new FileOutputStream(fileName)) {
                 workbook.write(fileOut);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -679,6 +692,55 @@ public class Map {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        private static void createChart(XSSFSheet sheet, XSSFWorkbook workbook, List<java.util.Map<String, Integer>> animalCountsHistory) {
+            XSSFDrawing drawing = sheet.createDrawingPatriarch();
+            XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, sheet.getLastRowNum() + 2, 10, sheet.getLastRowNum() + 20);
+
+            XSSFChart chart = drawing.createChart(anchor);
+            chart.setTitleText("Animal Population Over Time");
+            chart.setTitleOverlay(false);
+
+            XDDFChartLegend legend = chart.getOrAddLegend();
+            legend.setPosition(LegendPosition.TOP_RIGHT);
+
+            XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
+            bottomAxis.setTitle("Turn");
+            XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
+            leftAxis.setTitle("Population");
+
+            XDDFNumericalDataSource<Double> turns = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), 0, 0));
+
+            java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
+            int colNum = 1;
+            XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
+            for (String species : firstCounts.keySet()) {
+                XDDFNumericalDataSource<Double> population = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), colNum, colNum));
+                XDDFLineChartData.Series series = (XDDFLineChartData.Series) data.addSeries(turns, population);
+                series.setTitle(species, null);
+                colNum++;
+            }
+
+            chart.plot(data);
+        }
+        private static String getUniqueFileName(String baseName) {
+            String fileName = baseName;
+            String fileExtension = "";
+            int dotIndex = baseName.lastIndexOf('.');
+            if (dotIndex > 0) {
+                fileName = baseName.substring(0, dotIndex);
+                fileExtension = baseName.substring(dotIndex);
+            }
+
+            int counter = 1;
+            File file = new File(fileName + fileExtension);
+            while (file.exists()) {
+                file = new File(fileName + counter + fileExtension);
+                counter++;
+            }
+
+            return file.getAbsolutePath();
         }
     }
 }

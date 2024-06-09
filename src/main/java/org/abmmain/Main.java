@@ -12,6 +12,7 @@ public class Main {
         config();
         Map.startSimulation(mapLength, mapHeight, bearAmount, deerAmount, wolfAmount, hareAmount, foxAmount, berryAmount, burrowAmount);
         Board.startMap();
+        Map.AnimalCounter.countAnimals(Map.map);
         for (int i = 0; i < turnAmount; i++) {
             //open JFrame and paint it with adequate colours
             //call to data-saving method
