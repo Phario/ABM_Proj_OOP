@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Config {
     public static int turnAmount = 70;
-    public static int turnInterval = 10;
+    public static int turnInterval = 50;
     public static int bearAmount = 50;
     public static int foxAmount = 50;
     public static int deerAmount = 50;

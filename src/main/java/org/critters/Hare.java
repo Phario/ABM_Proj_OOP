@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import static org.maps.Map.map;
 
-public class Hare extends ACritter implements Burrower {
+public class Hare extends ACritter{
     public int getStaticID(ACritter ID) {
         return critterID;
     }
@@ -17,10 +17,7 @@ public class Hare extends ACritter implements Burrower {
         super(species, offspringChance,x ,y);
     }
 
-    @Override
-    public void burrower() {
 
-    }
     public Integer scanEnvironment(String objectName) {
         for (int environmentY = this.y - 1; environmentY <= this.y + 1; environmentY++) {
             for (int environmentX = this.x - 1; environmentX <= this.x + 1; environmentX++) {

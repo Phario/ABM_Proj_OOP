@@ -298,7 +298,7 @@ public class Map {
                             break;
                         case "Wolf":
                             if(map[i][j].scanEnvironment("Bear") != 0){
-                                Integer preyID = map[i][j].scanEnvironment("Bear");
+                                Integer preyID = map[i][j].scanEnvironment("Wolf");
                                 boolean critterFound = false;
                                 for (int k = i-1; k <= i+1; k++) {
                                     if (k < 0 || k >= map.length) continue;
@@ -562,6 +562,7 @@ public class Map {
 
                             if (newCritter != null) {
                                 newCritter.setAge(0); // New critter starts with age 0
+                                newCritter.setHunger(50);
                                 map[newCell[1]][newCell[0]] = newCritter; // Place new critter on the map
                             }
                         }
