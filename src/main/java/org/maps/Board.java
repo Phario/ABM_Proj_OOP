@@ -14,7 +14,7 @@ public class Board extends JPanel {
         JFrame frame = new JFrame("Forest Shenanigans");
         Board forest = new Board();
         frame.add(forest);
-        frame.setSize(mapLength * 2, mapHeight * 2);
+        frame.setSize(mapLength * 4, mapHeight * 4);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

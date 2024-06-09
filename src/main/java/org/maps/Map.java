@@ -63,6 +63,9 @@ public class Map {
             //removes an object from an array, so it can't make 2 moves in a turn
         }
         aging();
+        for (int i = 0; i <= berryRespawnRate; i++) {
+            environmentObjectSpawner("Berries",1);
+        }
     }
     //takes the map as a parameter and a random number generator to
     //decide which critter moves first, then the critterTurnManager takes over so the critter can make its turn
