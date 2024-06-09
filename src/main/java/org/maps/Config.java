@@ -3,26 +3,26 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 80;
-    public static int turnInterval = 1;
+    public static int turnAmount = 40;
+    public static int turnInterval = 50;
     public static int bearAmount = 10;
     public static int foxAmount = 10;
     public static int deerAmount = 10;
     public static int wolfAmount = 10;
-    public static int hareAmount = 30;
+    public static int hareAmount = 10;
     public static int berryAmount = 10;
-    public static int burrowAmount = 10;
+    public static int burrowAmount = 5;
     //Object amounts for sim start
 
-    public static int mapLength = 100;
-    public static int mapHeight = 100;
-    protected static int hungerDrain = 5;
+    public static int mapLength = 80;
+    public static int mapHeight = 80;
+    protected static int hungerDrain = 0;
     //Hunger drain per turn
 
     protected static int bearVsDeer = 80;
     protected static int bearVsWolf = 60;
-    protected static int bearVsHare = 30;
-    protected static int bearVsFox = 30;
+    protected static int bearVsHare = 50;
+    protected static int bearVsFox = 50;
     //Bear hunting success chance variables (in %)
 
     protected static int wolfVsBear = 30;
@@ -43,10 +43,10 @@ public class Config {
     //food values
 
     protected static int burrowLife = 3;
-    protected static int berryLife = 6;
+    protected static int berryLife = 3;
     //non-movable object lifetimes
 
-    protected static int berryRespawnRate = 5;
+    protected static int berryRespawnRate = 1;
     //amount of berries spawned per turn
 
     protected static int bearOffspringChance = 60;
@@ -56,11 +56,11 @@ public class Config {
     protected static int wolfOffspringChance = 60;
     //offspringChances (in %)
 
-    protected static int bearMaxAge = 30;
-    protected static int deerMaxAge = 25;
-    protected static int hareMaxAge = 20;
-    protected static int foxMaxAge = 20;
-    protected static int wolfMaxAge = 25;
+    protected static int bearMaxAge = 300;
+    protected static int deerMaxAge = 250;
+    protected static int hareMaxAge = 200;
+    protected static int foxMaxAge = 200;
+    protected static int wolfMaxAge = 250;
     public static void config() {
         Scanner configInput = new Scanner(System.in);
         System.out.println("Quick setup? (true/false)");

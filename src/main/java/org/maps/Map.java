@@ -37,7 +37,7 @@ public class Map {
         environmentObjectSpawner("Berries", berryAmount);
         environmentObjectSpawner("Burrow", burrowAmount);
     }
-    public static void turnManager() {
+    public static void turnManager(ACritter[][] map) {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
         for (int i = 0; i < map.length; i++) {
@@ -455,7 +455,6 @@ public class Map {
 
         for (int i = 0; i < amount; i++) {
             boolean placed = false;
-            int attemptNo = 0;
             while (!placed) {
                 int x = random.nextInt(rows);
                 int y = random.nextInt(cols);
@@ -466,8 +465,6 @@ public class Map {
                         placed = true;
                     }
                 }
-                attemptNo += 1;
-                if (attemptNo > 30) break;
             }
         }
     }

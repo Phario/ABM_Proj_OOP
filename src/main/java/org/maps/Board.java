@@ -2,45 +2,64 @@ package org.maps;
 
 import javax.swing.*;
 import java.awt.*;
-import org.critters.*;
 
 import static org.maps.Config.*;
+import static org.maps.Map.map;
 
 public class Board extends JPanel {
-    public static ACritter[][] map;
-
+    public static int cellSize = 10;
+    private static JFrame frame;
 
     public static void startMap() {
-        JFrame frame = new JFrame("Forest Shenanigans");
+        frame = new JFrame("Forest Shenanigans");
         Board forest = new Board();
         frame.add(forest);
-        frame.setSize(mapLength * 4, mapHeight * 4);
+        frame.setSize(mapLength * cellSize, mapHeight * cellSize);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-    }
-
-    public void paintMap() {
-        repaint();
-
-        for (int i = 0; i < mapLength; i++) {
-            for (int j = 0; j < mapHeight; j++) {
-                switch (map[i][j].getSpecies()) {
-                    case "Bear":
-                        //paint a brown rectangle at [i][j]
-                        break;
-                }
-            }
-        }
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.RED);
-        g2.fillRect(0, 0, getWidth(), getHeight());
-        g2.setColor(Color.BLUE);
-        g2.fillRect(200, 200, 20, 20);
+        //g2.setColor(Color.GREEN);
+        //g2.fillRect(0, 0, getWidth(), getHeight());
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] != null) {
+                    switch (map[i][j].getSpecies()) {
+                        case "Bear":
+                            g2.setColor(new Color(96, 38, 0));
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                        case "Deer":
+                            g2.setColor(Color.YELLOW);
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                        case "Fox":
+                            g2.setColor(new Color(241, 134, 5));
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                        case "Hare":
+                            g2.setColor(Color.CYAN);
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                        case "Wolf":
+                            g2.setColor(Color.GRAY);
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                        case "Berries":
+                            g2.setColor(Color.BLUE);
+                            g2.fillRect(i*cellSize,j*cellSize,cellSize,cellSize);
+                            break;
+                    }
+                }
+            }
+        }
     }
-    //placeholder for when I actually learn how to use this POS
+    public static void refreshFrame() {
+        frame.repaint();
+    }
+    // Placeholder for when I actually learn how to use this POS
 }
