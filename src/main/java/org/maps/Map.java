@@ -637,9 +637,9 @@ public class Map {
                     ACritter critter = map[i][j];
                     if (critter != null) {
                         String species = critter.getSpecies();
-                       //if (!species.equals("Burrow") && !species.equals("Berries")) { // Skips burrows and berries
+                       if (!species.equals("Burrow") && !species.equals("Berries")) { // Skips burrows and berries
                             animalCounts.put(species, animalCounts.getOrDefault(species, 0) + 1);
-                       //}
+                       }
                     }
                 }
             }

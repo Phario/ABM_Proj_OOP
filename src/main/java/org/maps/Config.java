@@ -3,19 +3,19 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 80;
+    public static int turnAmount = 10;
     public static int turnInterval = 1000;
     public static int bearAmount = 0;
-    public static int foxAmount = 50;
+    public static int foxAmount = 150;
     public static int deerAmount = 0;
     public static int wolfAmount = 0;
-    public static int hareAmount = 50;
+    public static int hareAmount = 1;
     public static int berryAmount = 0;
     public static int burrowAmount = 0;
     //Object amounts for sim start
 
-    public static int mapLength = 80;
-    public static int mapHeight = 80;
+    public static int mapLength = 50;
+    public static int mapHeight = 50;
     protected static int hungerDrain = 0;
     //Hunger drain per turn
 
@@ -51,7 +51,7 @@ public class Config {
 
     protected static int bearOffspringChance = 60;
     protected static int deerOffspringChance = 60;
-    protected static int foxOffspringChance = 0;
+    protected static int foxOffspringChance = 100;
     protected static int hareOffspringChance = 0;
     protected static int wolfOffspringChance = 60;
     //offspringChances (in %)
