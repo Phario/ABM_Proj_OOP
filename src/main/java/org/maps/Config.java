@@ -3,43 +3,43 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 600;
+    public static int turnAmount = 80;
     public static int turnInterval = 100;
-    public static int bearAmount = 50;
-    public static int foxAmount = 50;
-    public static int deerAmount = 50;
-    public static int wolfAmount = 50;
-    public static int hareAmount = 120;
+    public static int bearAmount = 30;
+    public static int foxAmount = 30;
+    public static int deerAmount = 30;
+    public static int wolfAmount = 30;
+    public static int hareAmount = 30;
     public static int berryAmount = 40;
     public static int burrowAmount = 20;
     //Object amounts for sim start
     protected static int burrowChance = 1;
     //chance for an animal to make a burrow
-    protected static int berryRespawnRate = 20;
+    protected static int berryRespawnRate = 2;
     //amount of berries spawned per turn
 
     protected static int burrowLife = 100;
-    protected static int berryLife = 10;
+    protected static int berryLife = 40;
     //non-movable object lifetimes
 
     public static int mapLength = 80;
     public static int mapHeight = 80;
-    protected static int hungerDrain = 20;
+    protected static int hungerDrain = 2;
     //Hunger drain per turn
 
     protected static int bearVsDeer = 80;
-    protected static int bearVsWolf = 50;
-    protected static int bearVsHare = 20;
-    protected static int bearVsFox = 30;
+    protected static int bearVsWolf = 70;
+    protected static int bearVsHare = 70;
+    protected static int bearVsFox = 70;
     //Bear hunting success chance variables (in %)
 
-    protected static int wolfVsBear = 0;
+    protected static int wolfVsBear = 30;
     protected static int wolfVsDeer = 80;
     protected static int wolfVsHare = 80;
-    protected static int wolfVsFox = 5;
+    protected static int wolfVsFox = 80;
     //Wolf hunting success chance variables (in %)
 
-    protected static int foxVsHare = 40;
+    protected static int foxVsHare = 90;
     //Fox hunting success chance variables (in %)
 
     protected static int bearFoodValue = 100;
@@ -50,11 +50,11 @@ public class Config {
     protected static int berriesFoodValue = 40;
     //food values
 
-    protected static int bearOffspringChance = 50;
-    protected static int deerOffspringChance = 90;
-    protected static int foxOffspringChance = 80;
-    protected static int hareOffspringChance = 100;
-    protected static int wolfOffspringChance = 60;
+    protected static int bearOffspringChance = 30;
+    protected static int deerOffspringChance = 30;
+    protected static int foxOffspringChance = 30;
+    protected static int hareOffspringChance = 30;
+    protected static int wolfOffspringChance = 30;
     //offspringChances (in %)
 
     protected static int bearMaxAge = 90;
