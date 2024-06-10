@@ -751,28 +751,37 @@ public class Map {
 
         // Helper method to create a chart
         private static void createChart(XSSFSheet sheet, XSSFWorkbook workbook, List<java.util.Map<String, Integer>> animalCountsHistory) {
+
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
             XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, sheet.getLastRowNum() + 2, 10, sheet.getLastRowNum() + 20);
 
+            // Title
             XSSFChart chart = drawing.createChart(anchor);
             chart.setTitleText("Animal Population Over Time");
             chart.setTitleOverlay(false);
 
+            // Legend
             XDDFChartLegend legend = chart.getOrAddLegend();
             legend.setPosition(LegendPosition.TOP_RIGHT);
 
+            // Create X and Y axes for the chart and set their titles
             XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
             bottomAxis.setTitle("Turn");
             XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
             leftAxis.setTitle("Population");
 
+            // Define the data source for the X axis (turns)
             XDDFNumericalDataSource<Double> turns = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), 0, 0));
 
             java.util.Map<String, Integer> firstCounts = animalCountsHistory.get(0);
             int colNum = 1;
             XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
             for (String species : firstCounts.keySet()) {
+
+                // Define the data source for the Y axis (population) for the current species
                 XDDFNumericalDataSource<Double> population = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), colNum, colNum));
+
+                // Add a data series for the current species to the chart
                 XDDFLineChartData.Series series = (XDDFLineChartData.Series) data.addSeries(turns, population);
                 series.setTitle(species, null);
                 series.setMarkerStyle(MarkerStyle.NONE); // no marks, just lines
