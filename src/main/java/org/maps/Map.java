@@ -268,6 +268,7 @@ public class Map {
                                     if (critterFound) break;
                                 }
                             }
+                            digBurrow(map[i][j].getCritterID());
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Hare":
@@ -294,6 +295,7 @@ public class Map {
                                     if (critterFound) break;
                                 }
                             }
+                            digBurrow(map[i][j].getCritterID());
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Wolf":
@@ -626,7 +628,43 @@ public class Map {
     public static Integer getArrayObjectID(int x, int y) {
         return map[x][y].getCritterID();
     }
+    private static void digBurrow(Integer critterID) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] != null && map[i][j].getCritterID().equals(critterID)) {
 
+                    // Determine if a new burrow should be created
+                    if (random.nextInt(100) < burrowChance) {
+                        int parentX = map[i][j].getX();
+                        int parentY = map[i][j].getY();
+                        List<int[]> emptyCells = new ArrayList<>();
+
+                        // Find all empty neighboring cells
+                        for (int y = parentY - 1; y <= parentY + 1; y++) {
+                            for (int x = parentX - 1; x <= parentX + 1; x++) {
+                                if (isValid(x, y, map.length, map[0].length) && map[y][x] == null) {
+                                    emptyCells.add(new int[]{x, y});
+                                }
+                            }
+                        }
+
+                        // If there are empty cells, randomly select one to create a new burrow
+                        if (!emptyCells.isEmpty()) {
+                            int[] newCell = emptyCells.get(random.nextInt(emptyCells.size()));
+                            ACritter newBurrow = createCritter("Burrow", newCell[0], newCell[1]);
+
+                            if (newBurrow != null) {
+                                newBurrow.setAge(0); // New burrow starts with age 0
+                                map[newCell[1]][newCell[0]] = newBurrow; // Place new burrow on the map
+                            }
+                        }
+                    }
+
+                    return; // End method when critter is found
+                }
+            }
+        }
+    }
 
     public class AnimalCounter {
 

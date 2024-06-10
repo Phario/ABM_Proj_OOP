@@ -4,21 +4,22 @@ import java.util.Scanner;
 
 public class Config {
     public static int turnAmount = 80;
-    public static int turnInterval = 50;
+    public static int turnInterval = 100;
     public static int bearAmount = 30;
     public static int foxAmount = 30;
     public static int deerAmount = 30;
     public static int wolfAmount = 30;
     public static int hareAmount = 30;
-    public static int berryAmount = 30;
-    public static int burrowAmount = 30;
+    public static int berryAmount = 40;
+    public static int burrowAmount = 20;
     //Object amounts for sim start
-
+    protected static int burrowChance = 1;
+    //chance for an animal to make a burrow
     protected static int berryRespawnRate = 2;
     //amount of berries spawned per turn
 
     protected static int burrowLife = 100;
-    protected static int berryLife = 30;
+    protected static int berryLife = 40;
     //non-movable object lifetimes
 
     public static int mapLength = 80;
@@ -50,10 +51,10 @@ public class Config {
     //food values
 
     protected static int bearOffspringChance = 30;
-    protected static int deerOffspringChance = 50;
-    protected static int foxOffspringChance = 50;
-    protected static int hareOffspringChance = 50;
-    protected static int wolfOffspringChance = 50;
+    protected static int deerOffspringChance = 30;
+    protected static int foxOffspringChance = 30;
+    protected static int hareOffspringChance = 30;
+    protected static int wolfOffspringChance = 30;
     //offspringChances (in %)
 
     protected static int bearMaxAge = 90;
@@ -113,6 +114,8 @@ public class Config {
                 burrowLife = configInput.nextInt();
                 //non-movable object lifetime
 
+                System.out.println("Enter burrow spawn chance (in %):");
+                burrowChance = configInput.nextInt();
                 System.out.println("Enter berry respawn rate in amount spawned per turn:");
                 berryRespawnRate = configInput.nextInt();
                 //berry respawn rate
