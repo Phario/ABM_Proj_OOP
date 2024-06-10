@@ -24,7 +24,7 @@ public abstract class ACritter implements Critters {
         this.Species = Species;
         this.offspringChance = offspringChance;
         this.hunger = 100;
-        this.age = randomAge.nextInt(16);
+        this.age = randomAge.nextInt(50);
         this.x = x; // Initialize position x
         this.y = y; // Initialize position y
         this.critterID = globalCritterID;
