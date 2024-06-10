@@ -3,28 +3,30 @@ package org.maps;
 import java.util.Scanner;
 
 public class Config {
-    public static int turnAmount = 600;
-    public static int turnInterval = 100;
+    public static int turnAmount = 100;
+    public static int turnInterval = 10;
     public static int bearAmount = 50;
-    public static int foxAmount = 50;
+    public static int foxAmount = 60;
     public static int deerAmount = 50;
     public static int wolfAmount = 50;
-    public static int hareAmount = 120;
+    public static int hareAmount = 80;
     public static int berryAmount = 40;
     public static int burrowAmount = 20;
     //Object amounts for sim start
     protected static int burrowChance = 1;
     //chance for an animal to make a burrow
-    protected static int berryRespawnRate = 20;
+    protected static int berryRespawnRate = 30;
     //amount of berries spawned per turn
 
+    protected static int ageOfConsent = 6;
+    //"Without Rules, We Live With The Animals" - John Wick
     protected static int burrowLife = 100;
     protected static int berryLife = 10;
     //non-movable object lifetimes
 
     public static int mapLength = 80;
     public static int mapHeight = 80;
-    protected static int hungerDrain = 20;
+    protected static int hungerDrain = 10;
     //Hunger drain per turn
 
     protected static int bearVsDeer = 80;
@@ -48,13 +50,15 @@ public class Config {
     protected static int hareFoodValue = 40;
     protected static int wolfFoodValue = 50;
     protected static int berriesFoodValue = 40;
+    protected static int hungerKillSwitch = 80;
+    protected static int hungerBreederSwitch = 40;
     //food values
 
-    protected static int bearOffspringChance = 50;
-    protected static int deerOffspringChance = 90;
-    protected static int foxOffspringChance = 80;
-    protected static int hareOffspringChance = 100;
-    protected static int wolfOffspringChance = 60;
+    protected static int bearOffspringChance = 40;
+    protected static int deerOffspringChance = 40;
+    protected static int foxOffspringChance = 40;
+    protected static int hareOffspringChance = 40;
+    protected static int wolfOffspringChance = 40;
     //offspringChances (in %)
 
     protected static int bearMaxAge = 90;
@@ -106,6 +110,8 @@ public class Config {
                 wolfFoodValue = configInput.nextInt();
                 System.out.println("Berries:");
                 berriesFoodValue = configInput.nextInt();
+                System.out.println("Enter hunting hunger threshold:");
+                hungerKillSwitch = configInput.nextInt();
                 //food values for animals
 
                 System.out.println("Enter berry lifetime in number of turns:");
@@ -130,7 +136,11 @@ public class Config {
                 hareOffspringChance = configInput.nextInt();
                 System.out.println("Enter wolf offspringChance (in %):");
                 wolfOffspringChance = configInput.nextInt();
-                //offspring chance values
+                System.out.println("Enter age of consent (in turns):");
+                ageOfConsent = configInput.nextInt();
+                System.out.println("Enter breeding hunger threshold:");
+                hungerBreederSwitch = configInput.nextInt();;
+                //offspring chance and ageOfConsent values
 
                 System.out.println("Enter bear max age (in amount of turns):");
                 bearMaxAge = configInput.nextInt();

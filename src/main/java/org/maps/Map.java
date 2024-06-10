@@ -101,7 +101,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             int successChance = random.nextInt(101);
                                             if(successChance <= bearVsDeer){
@@ -124,7 +124,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(burrowID != 0 && map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
@@ -149,7 +149,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(burrowID != 0 && map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
@@ -198,7 +198,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             PETAHandler(preyID);
                                             map[i][j].eat(berriesFoodValue);
@@ -224,7 +224,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID()) && map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             PETAHandler(preyID);
                                             map[i][j].eat(berriesFoodValue-80);
@@ -250,7 +250,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID()) && map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(burrowID != 0 && map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
@@ -282,7 +282,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID()) && map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             PETAHandler(preyID);
                                             map[i][j].eat(berriesFoodValue);
@@ -330,7 +330,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID()) && map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             int successChance = random.nextInt(101);
                                             if(successChance <= wolfVsDeer){
@@ -353,7 +353,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID()) && map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(burrowID != 0 && map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
@@ -378,7 +378,7 @@ public class Map {
                                     if (k < 0 || k >= map.length) continue;
                                     for (int l = j-1; l <= j+1; l++) {
                                         if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID()) && map[i][j].getHunger() < 60) {
+                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())&& map[i][j].getHunger() < hungerKillSwitch) {
                                             critterFound = true;
                                             Integer burrowID = map[k][l].scanEnvironment("Burrow");
                                             if(burrowID != 0 && map[k][l].scanEnvironment("Burrow").equals(burrowID)) break;
@@ -518,7 +518,7 @@ public class Map {
     private static void breeder( Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] != null && map[i][j].getCritterID().equals(critterID)) {
+                if (map[i][j] != null && map[i][j].getCritterID().equals(critterID) && map[i][j].getAge() > ageOfConsent) {
                     ACritter critter = map[i][j];
                     int offspringChance;
 
