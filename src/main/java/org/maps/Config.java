@@ -51,7 +51,7 @@ public class Config {
     protected static int wolfFoodValue = 50;
     protected static int berriesFoodValue = 40;
     protected static int hungerKillSwitch = 80;
-    protected static int hungerBreederSwitch = 40;
+    protected static int hungerBreederSwitch = 50;
     //food values
 
     protected static int bearOffspringChance = 40;
@@ -139,7 +139,7 @@ public class Config {
                 System.out.println("Enter age of consent (in turns):");
                 ageOfConsent = configInput.nextInt();
                 System.out.println("Enter breeding hunger threshold:");
-                hungerBreederSwitch = configInput.nextInt();;
+                hungerBreederSwitch = configInput.nextInt();
                 //offspring chance and ageOfConsent values
 
                 System.out.println("Enter bear max age (in amount of turns):");

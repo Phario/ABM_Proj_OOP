@@ -91,7 +91,7 @@ public class Map {
                     switch (map[i][j].getSpecies()) {
 
                         case "Bear":
-                            if(map[i][j].scanEnvironment("Bear") != 0 && map[i][j].getHunger() > 50){
+                            if(map[i][j].scanEnvironment("Bear") != 0 && map[i][j].getHunger() > hungerBreederSwitch){
                                 breeder(map[i][j].getCritterID());
                             }
                             if(map[i][j].scanEnvironment("Deer") != 0){
@@ -214,7 +214,7 @@ public class Map {
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Deer":
-                            if(map[i][j].scanEnvironment("Deer") != 0 && map[i][j].getHunger() > 50){
+                            if(map[i][j].scanEnvironment("Deer") != 0 && map[i][j].getHunger() > hungerBreederSwitch){
                                 breeder(map[i][j].getCritterID());
                             }
                             if(map[i][j].scanEnvironment("Berries") != 0){
@@ -240,7 +240,7 @@ public class Map {
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Fox":
-                            if(map[i][j].scanEnvironment("Fox") != 0 && map[i][j].getHunger() > 50){
+                            if(map[i][j].scanEnvironment("Fox") != 0 && map[i][j].getHunger() > hungerBreederSwitch){
                                 breeder(map[i][j].getCritterID());
                             }
                             if(map[i][j].scanEnvironment("Hare") != 0){
@@ -272,7 +272,7 @@ public class Map {
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Hare":
-                            if(map[i][j].scanEnvironment("Hare") != 0 && map[i][j].getHunger() > 50){
+                            if(map[i][j].scanEnvironment("Hare") != 0 && map[i][j].getHunger() > hungerBreederSwitch){
                                 breeder(map[i][j].getCritterID());
                             }
                             if(map[i][j].scanEnvironment("Berries") != 0){
@@ -396,7 +396,7 @@ public class Map {
                                     if (critterFound) break;
                                 }
                             }
-                            if(map[i][j].scanEnvironment("Wolf") != 0 && map[i][j].getHunger() > 50){
+                            if(map[i][j].scanEnvironment("Wolf") != 0 && map[i][j].getHunger() > hungerBreederSwitch){
                                 breeder(map[i][j].getCritterID());
                             }
                             moveCritter(map[i][j], map, i, j);
