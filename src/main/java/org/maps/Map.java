@@ -28,6 +28,29 @@ public class Map {
     private static Random random = new Random();
     public static ACritter[][] map;
     //map that contains the instances of ACritter subclasses
+
+    /**
+     * Initializes and starts the ecosystem simulation based on the specified parameters.
+     *
+     * Input:
+     * - int mapSizeX: The width of the map grid.
+     * - int mapSizeY: The height of the map grid.
+     * - int bearAmount: The initial number of Bear critters to spawn.
+     * - int deerAmount: The initial number of Deer critters to spawn.
+     * - int wolfAmount: The initial number of Wolf critters to spawn.
+     * - int hareAmount: The initial number of Hare critters to spawn.
+     * - int foxAmount: The initial number of Fox critters to spawn.
+     * - int berryAmount: The initial number of Berries to spawn.
+     * - int burrowAmount: The initial number of Burrows to spawn.
+     *
+     * Output:
+     * - void: This method does not return any value.
+     *
+     * This method initializes the map with dimensions mapSizeX x mapSizeY.
+     * It then spawns the specified number of critters and environment objects onto the map:
+     * - Bears, Deer, Foxes, Hares, Wolves, Berries, and Burrows.
+     * The spawning of critters and objects is handled by the environmentObjectSpawner method.
+     */
     public static void startSimulation(int mapSizeX, int mapSizeY, int bearAmount, int deerAmount, int wolfAmount, int hareAmount, int foxAmount, int berryAmount, int burrowAmount) {
         map = new ACritter[mapSizeX][mapSizeY];
         environmentObjectSpawner("Bear", bearAmount);
@@ -38,6 +61,25 @@ public class Map {
         environmentObjectSpawner("Berries", berryAmount);
         environmentObjectSpawner("Burrow", burrowAmount);
     }
+    /**
+     * Manages the turns of all critters on the map, handling their actions, interactions,
+     * and environment changes for each turn cycle.
+     *
+     * Input:
+     * - ACritter[][] map: The 2D array representing the map grid containing critters.
+     *
+     * Throws:
+     * - InterruptedException: This method may throw an InterruptedException due to Thread.sleep().
+     *
+     * Output:
+     * - void: This method does not return any value.
+     *
+     * This method iterates through the map to collect all critter IDs and stores them in a list.
+     * It then processes each critter's turn in a random order until all critters have taken their turn.
+     * For each critter, it invokes the critterTurnManager to handle specific behaviors based on their species.
+     * After all critters have completed their turns, it performs aging for all critters on the map.
+     * It also respawns environment objects (berries) and introduces a delay (turnInterval) using Thread.sleep().
+     */
     public static void turnManager(ACritter[][] map) throws InterruptedException {
         ArrayList<Integer> critterIDList = new ArrayList<>();
         //scans the map for critters and adds their ids to a list
@@ -48,9 +90,6 @@ public class Map {
                 }
             }
         }
-        //uses a random number generator to choose a number from a list,
-        //takes a critter's id and looks for it on the map
-        //then uses critterTurnManager so the critter can make his move
         while(!critterIDList.isEmpty()) {
             boolean moveFinished = false;
             int critterIndex = random.nextInt(critterIDList.size());
@@ -77,11 +116,28 @@ public class Map {
         }
         Thread.sleep(turnInterval);
     }
-    //takes the map as a parameter and a random number generator to
-    //decide which critter moves first, then the critterTurnManager takes over so the critter can make its turn
-    //This method creates a list of critters and removes them after they move, they are chosen
-    //based on their ID
-    //turnManager manages ONLY 1 TURN, the main method is going to have a loop with the number of turns
+    /**
+     * Manages the turn-based behavior of a specific critter on the map, including movement,
+     * interaction with the environment (other critters and food sources), breeding, aging,
+     * and hunger management.
+     *
+     * Input:
+     * - ACritter[][] map: The 2D array representing the map grid containing critters.
+     * - Integer critterID: The unique identifier of the critter whose turn is being managed.
+     *
+     * Output:
+     * - void: This method does not return any value.
+     *
+     * This method iterates through the entire map to find the critter with the specified critterID.
+     * Once found, it processes the critter's behavior based on its species:
+     * - For each critter type (e.g., Bear, Deer, Fox, Hare, Wolf), specific actions are taken:
+     *   - Breeding: If conditions are met (age and breeding chance), a new critter may be created nearby.
+     *   - Interaction: The critter may interact with other critters.
+     *   - Movement: The critter may move to an adjacent empty cell if conditions allow.
+     *   - Hunger management: The critter's hunger level decreases each turn; if it reaches zero, the critter is removed.
+     *   - Specific species behaviors are managed using switch-case statements based on the critter's species.
+     * - After processing the critter's turn, its hunger level is updated and checked for removal if hunger is zero or below.
+     */
     private static void critterTurnManager(ACritter[][] map, Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -419,10 +475,23 @@ public class Map {
             }
         }
     }
-    //input: map and critterID
-    //manages a critter's turn depending on what kind of object it is
-
-    //General method to move critters
+    /**
+     * Moves a critter to an adjacent empty cell on the map if available.
+     *
+     * Input:
+     *  - ACritter critter: The critter object to be moved.
+     *  - ACritter[][] map: The 2D array representing the map grid.
+     *  - int x: The current X coordinate of the critter.
+     *  - int y: The current Y coordinate of the critter.
+     *
+     * Output:
+     *  - void: This method does not return any value.
+     *
+     * This method collects all available empty cells adjacent to the critter's current position.
+     * If there are available cells, it randomly selects one, moves the critter to that cell, and
+     * updates its coordinates on the map.
+     * If no empty cells are available, the critter remains in its current position.
+     */
     private static void moveCritter(ACritter critter, ACritter[][] map, int x, int y) {
         List<int[]> availableCells = new ArrayList<>();
 
@@ -453,6 +522,20 @@ public class Map {
         critter.setY(newY); // Update critter's Y coordinate
         map[newX][newY] = critter; // Place the critter in the new cell
     }
+    /**
+     * Spawns a specified number of environment objects of a given type in random empty positions on the map.
+     *
+     * Input:
+     *  - String objectType: The type of environment object to spawn (e.g., "Bear", "Deer").
+     *  - int amount: The number of objects to spawn.
+     *
+     * Output:
+     *  - void: This method does not return any value.
+     *
+     * This method takes the type of environment object and the amount to spawn as input. It randomly
+     * places the specified number of objects on the map in empty cells. It uses a loop to ensure
+     * each object is placed in a valid, empty position on the map.
+     */
     private static void environmentObjectSpawner(String objectType, int amount) {
         int rows = map.length;
         int cols = map[0].length;
@@ -472,10 +555,22 @@ public class Map {
             }
         }
     }
-    //takes two random numbers from 0 to array length/width and
-    //places an object there only if the space is free, if it isn't then
-    //it looks again for a free space, needs input parameters such as
-    //type of object to spawn and the amount of the object
+
+    /**
+     * Creates a new critter object based on the specified type and location.
+     *
+     * Input:
+     *  - String objectType: The type of critter to create (e.g., "Bear", "Deer").
+     *  - int x: The x-coordinate for the critter's position.
+     *  - int y: The y-coordinate for the critter's position.
+     *
+     * Output:
+     *  - ACritter: The newly created critter object or null if the objectType is unknown.
+     *
+     * This method takes the type of critter and its coordinates as input and returns a new instance
+     * of the corresponding critter class. If the objectType is unknown, it prints an error message
+     * and returns null.
+     */
 
     private static ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
@@ -497,9 +592,21 @@ public class Map {
                 System.out.println("Unknown type: " + objectType);
                 return null;
         }
-        // Input: coordinates and species
-        // Usage: creates an object of the given coordinates and species
+
     }
+
+    /**
+     * Removes a critter from the map based on its ID.
+     *
+     * Input:
+     *  - Integer critterID: The ID of the critter to be removed.
+     *
+     * Output:
+     *  - No direct output, but the critter with the given ID will be removed from the map if found.
+     *
+     * This method iterates over the entire map to find the critter with the specified ID and sets its
+     * position on the map to null, effectively removing it from the map.
+     */
     private static void PETAHandler(Integer critterID) {
         int rows = map.length;
         int columns = map[0].length;
@@ -513,8 +620,20 @@ public class Map {
             }
         }
     }
-    //Input:   ID
-    //Usage:  searches the map until it finds coordinates that match the ID, after that sets the coordinate data to null
+
+    /**
+     * Attempts to breed a critter with the given ID if it is of age and the conditions for breeding are met.
+     *
+     * Input:
+     *  - Integer critterID: The ID of the critter to be checked for breeding.
+     *
+     * Output:
+     *  - No direct output, but may add a new critter to the map if breeding conditions are met.
+     *
+     * This method iterates over the entire map to find the critter with the given ID. If the critter is of age,
+     * it determines the species-specific breeding chance. If the breeding chance condition is met, it finds
+     * empty neighboring cells and places a new critter in one of those cells.
+     */
     private static void breeder( Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -575,8 +694,21 @@ public class Map {
             }
         }
     }
-    //looks for an empty space around an animal and places a new
-    //instance of the animal there with age = 0
+
+
+    /**
+     * Ages all the critters and plants on the map by incrementing their age by 1.
+     * If any critter or plant exceeds its maximum age, it triggers the PETAHandler method to handle its removal.
+     *
+     * Input:
+     *  - No direct input parameters, but uses the global 'map' array.
+     *
+     * Output:
+     *  - No direct output, but modifies the state of critters and plants in the 'map'.
+     *
+     * This method iterates over the entire map, increments the age of each non-null entity,
+     * and checks if the entity's age exceeds its maximum allowed age, handling the removal if necessary.
+     */
     private static void aging() {
         int rows = map.length;
         int cols = map[0].length;
@@ -616,18 +748,49 @@ public class Map {
             }
         }
     }
-    //Usage: searches the entire map, if there is an object it increases its age, checks its species
-    //and calls PETAHandler to remove object if it's too old.
 
+    /**
+     * Checks if the given coordinates (x, y) are valid within a grid or matrix defined by the number of rows and columns.
+     *  Input:
+     *  -The x and y coordinate of the map array.
+     *  -The total number of rows and columns in the grid.
+     */
     private static boolean isValid(int x, int y, int rows, int cols) {
         return x >= 0 && x < rows && y >= 0 && y < cols;
     }
+    /**
+     * Retrieves the species name of the critter (object) located at the specified coordinates (x, y) on the map.
+     * Input: The x and y coordinate of the map array.
+     */
+
     public static String getArrayObjectName(int x, int y) {
         return map[x][y].getSpecies();
     }//gets an object's name from an array's field and returns it
+
+    /**
+     * Retrieves the critter ID (object ID) located at the specified coordinates (x, y) on the map.
+     * Input: The x and y coordinate of the map array.
+     */
     public static Integer getArrayObjectID(int x, int y) {
         return map[x][y].getCritterID();
     }
+
+    /**
+     * Handles the behavior of a critter digging a burrow in the simulation.
+     *
+     * Input:
+     * - Integer critterID: The ID of the critter that wants to dig a burrow.
+     *
+     * Output:
+     * - void: This method does not return any value.
+     *
+     * This method iterates through the map to find the critter with the specified critterID.
+     * If the critter is found, it checks if a new burrow should be created based on a random chance (burrowChance).
+     * If the random chance is met, the method then looks for neighboring empty cells to place the new burrow.
+     * Once an empty cell is found, a new burrow critter (of type "Burrow") is created and placed on the map.
+     * The new burrow starts with an age of 0.
+     * This method ensures that only one burrow is created per call and stops further search once the critter is found.
+     */
     private static void digBurrow(Integer critterID) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
@@ -665,7 +828,18 @@ public class Map {
             }
         }
     }
-
+    /**
+     * Counts the animals on the map, excluding burrows and berries, and stores the counts in the history list.
+     *
+     * Input:
+     *  - map: A 2D array of ACritter objects representing the map.
+     *
+     * Output:
+     *  - None. The method updates the static list animalCountsHistory.
+     *
+     * This method iterates over the 2D array map, counts the occurrences of each animal species (excluding burrows and berries),
+     * and stores these counts in a map. This map is then added to the animalCountsHistory list to keep track of the counts for each turn.
+     */
     public class AnimalCounter {
 
         // A list to store the history of animal counts for each turn
@@ -699,6 +873,19 @@ public class Map {
 
 
     public class ExcelWriter {
+
+        /**
+         * Writes the animal counts history to an Excel file and creates a chart to visualize the data.
+         *
+         * Input:
+         *  - animalCountsHistory: A list of maps where each map contains the counts of different animal species for a turn.
+         *
+         * Output:
+         *  - An Excel file named "AnimalCounts.xlsx" with the animal counts data and a line chart.
+         *
+         * This method creates a new Excel workbook, adds the animal counts data to a sheet, creates a line chart to visualize the data,
+         * and saves the file with a unique name to avoid overwriting existing files.
+         */
 
         public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
             XSSFWorkbook workbook = new XSSFWorkbook();
@@ -749,7 +936,21 @@ public class Map {
             }
         }
 
-        // Helper method to create a chart
+
+        /**
+         * Creates a line chart in the given Excel sheet to visualize the animal population over time.
+         *
+         * Input:
+         *  - sheet: The Excel sheet where the chart will be created.
+         *  - workbook: The workbook containing the sheet.
+         *  - animalCountsHistory: A list of maps representing the counts of different animal species for each turn.
+         *
+         * Output:
+         *  - None. The method modifies the provided Excel sheet by adding a chart.
+         *
+         * This method generates a line chart in the specified Excel sheet to visualize how the population of each animal species changes over time.
+         * It uses the Apache POI library to create the chart and define its properties, such as title, legend, axes, and data series.
+         */
         private static void createChart(XSSFSheet sheet, XSSFWorkbook workbook, List<java.util.Map<String, Integer>> animalCountsHistory) {
 
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
@@ -791,7 +992,18 @@ public class Map {
             chart.plot(data);
         }
 
-        // Helper method to get a unique file name to avoid overwriting existing files
+        /**
+         * Generates a unique file name by appending a counter to the base name if a file with the base name already exists.
+         *
+         * Input:
+         *  - baseName: The base name for the file, which can include an extension (e.g., "file.xlsx").
+         *
+         * Output:
+         *  - A unique file name string with an absolute path.
+         *
+         * This method ensures that the file name generated is unique by checking if a file with the same name already exists in the directory.
+         * If it does, it appends a counter to the base name until it finds a name that is not taken.
+         */
         private static String getUniqueFileName(String baseName) {
             String fileName = baseName;
             String fileExtension = "";
