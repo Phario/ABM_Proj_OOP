@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Config {
     public static int turnAmount = 100;
-    public static int turnInterval = 10;
+    public static int turnInterval = 500;
     public static int bearAmount = 50;
     public static int foxAmount = 60;
     public static int deerAmount = 50;
@@ -30,12 +30,10 @@ public class Config {
     //Hunger drain per turn
 
     protected static int bearVsDeer = 80;
-    protected static int bearVsWolf = 50;
     protected static int bearVsHare = 20;
     protected static int bearVsFox = 30;
     //Bear hunting success chance variables (in %)
 
-    protected static int wolfVsBear = 0;
     protected static int wolfVsDeer = 80;
     protected static int wolfVsHare = 80;
     protected static int wolfVsFox = 5;
@@ -79,16 +77,12 @@ public class Config {
                 hungerDrain = configInput.nextInt();
                 System.out.println("Enter Bear vs Deer hunting chance (in %):");
                 bearVsDeer = configInput.nextInt();
-                System.out.println("Enter Bear vs Wolf hunting chance (in %):");
-                bearVsWolf = configInput.nextInt();
                 System.out.println("Enter Bear vs Hare hunting chance (in %):");
                 bearVsHare = configInput.nextInt();
                 System.out.println("Enter Bear vs Fox hunting chance (in %):");
                 bearVsFox = configInput.nextInt();
                 System.out.println("Enter Wolf vs Deer hunting chance (in %):");
                 wolfVsDeer = configInput.nextInt();
-                System.out.println("Enter Wolf vs Bear hunting chance (in %):");
-                wolfVsBear = configInput.nextInt();
                 System.out.println("Enter Wolf vs Fox hunting chance (in %):");
                 wolfVsFox = configInput.nextInt();
                 System.out.println("Enter Wolf vs Hare hunting chance (in %):");

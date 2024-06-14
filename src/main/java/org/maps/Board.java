@@ -65,5 +65,4 @@ public class Board extends JPanel {
     public static void refreshFrame() {
         frame.repaint();
     }
-    // Placeholder for when I actually learn how to use this POS
 }

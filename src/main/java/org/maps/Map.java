@@ -223,30 +223,6 @@ public class Map {
                                     if (critterFound) break;
                                 }
                             }
-                            /*if(map[i][j].scanEnvironment("Wolf") != 0){
-                                Integer preyID = map[i][j].scanEnvironment("Wolf");
-                                boolean critterFound = false;
-                                for (int k = i-1; k <= i+1; k++) {
-                                    if (k < 0 || k >= map.length) continue;
-                                    for (int l = j-1; l <= j+1; l++) {
-                                        if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())) {
-                                            critterFound = true;
-                                            int successChance = random.nextInt(101);
-                                            if(successChance <= bearVsWolf){
-                                                PETAHandler(preyID);
-                                                map[i][j].eat(wolfFoodValue);
-                                                if (map[i][j].getHunger() > 100) {
-                                                    map[i][j].setHunger(100);
-                                                }
-                                                break;
-                                            }
-                                            else PETAHandler(map[i][j].getCritterID());
-                                        }
-                                    }
-                                    if (critterFound) break;
-                                }
-                            }*/
                             if(map[i][j].scanEnvironment("Berries") != 0){
                                 Integer preyID = map[i][j].scanEnvironment("Berries");
                                 boolean critterFound = false;
@@ -355,30 +331,6 @@ public class Map {
                             moveCritter(map[i][j], map, i, j);
                             break;
                         case "Wolf":
-                            /*if(map[i][j].scanEnvironment("Bear") != 0){
-                                Integer preyID = map[i][j].scanEnvironment("Wolf");
-                                boolean critterFound = false;
-                                for (int k = i-1; k <= i+1; k++) {
-                                    if (k < 0 || k >= map.length) continue;
-                                    for (int l = j-1; l <= j+1; l++) {
-                                        if (l < 0 || l >= map[0].length) continue;
-                                        if (map[k][l] != null && preyID.equals(map[k][l].getCritterID())) {
-                                            critterFound = true;
-                                            int successChance = random.nextInt(101);
-                                            if(successChance <= wolfVsBear){
-                                                PETAHandler(preyID);
-                                                map[i][j].eat(bearFoodValue);
-                                                if (map[i][j].getHunger() > 100) {
-                                                    map[i][j].setHunger(100);
-                                                }
-                                                break;
-                                            }
-                                            else PETAHandler(map[i][j].getCritterID());
-                                        }
-                                    }
-                                    if (critterFound) break;
-                                }
-                            }*/
                             if(map[i][j].scanEnvironment("Deer") != 0){
                                 Integer preyID = map[i][j].scanEnvironment("Deer");
                                 boolean critterFound = false;
