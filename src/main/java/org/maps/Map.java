@@ -783,6 +783,7 @@ public class Map {
             }
         }
     }
+
     /**
      * Counts the animals on the map, excluding burrows and berries, and stores the counts in the history list.
      *
@@ -859,7 +860,6 @@ public class Map {
          * This method creates a new Excel workbook, adds the animal counts data to a sheet, creates a line chart to visualize the data,
          * and saves the file with a unique name to avoid overwriting existing files.
          */
-
         public static void writeToExcel(List<java.util.Map<String, Integer>> animalCountsHistory) {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("AnimalCounts");
