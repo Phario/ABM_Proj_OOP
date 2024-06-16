@@ -10,9 +10,22 @@ public class Hare extends ACritter{
     public int getStaticID(ACritter ID) {
         return critterID;
     }
+
+    /**
+     * Default constructor for Hare.
+     */
     public Hare() {
         super("N/A", 0, 0, 0);
     }
+
+    /**
+     * Constructs a Hare object with the specified species, offspring chance, and position.
+     *
+     * @param species          the species of the hare
+     * @param offspringChance  the chance of hare reproduction
+     * @param x                the x-coordinate position of the hare
+     * @param y                the y-coordinate position of the hare
+     */
     public Hare(String species, double offspringChance, int x, int y) {
         super(species, offspringChance,x ,y);
     }

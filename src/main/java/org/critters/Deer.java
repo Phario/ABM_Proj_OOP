@@ -10,12 +10,26 @@ public class Deer extends ACritter {
     public int getStaticID(ACritter ID) {
         return critterID;
     }
+
+    /**
+     * Default constructor for Deer.
+     */
     public Deer() {
         super("N/A", 0,0,0);
     }
+
+    /**
+     * Constructs a Deer object with the specified species, offspring chance, and position.
+     *
+     * @param species          the species of the deer
+     * @param offspringChance  the chance of deer reproduction
+     * @param x                the x-coordinate position of the deer
+     * @param y                the y-coordinate position of the deer
+     */
     public Deer(String species, double offspringChance, int x, int y) {
         super(species, offspringChance, x, y);
     }
+
     /**
      * Scans the surrounding 3x3 grid centered on the current object's coordinates
      * (this.x, this.y) within a map. It checks if a specific object (identified by

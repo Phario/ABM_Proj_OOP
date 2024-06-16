@@ -10,9 +10,22 @@ public class Bear extends ACritter {
     public int getStaticID(ACritter ID) {
         return critterID;
     }
+
+    /**
+     * Default constructor for Bear.
+     */
     public Bear() {
         super("N/A", 0, 0, 0);
     }
+
+    /**
+     * Constructs a Bear object with the specified species, offspring chance, and position.
+     *
+     * @param species          the species of the bear
+     * @param offspringChance  the chance of bear reproduction
+     * @param x                the x-coordinate position of the bear
+     * @param y                the y-coordinate position of the bear
+     */
     public Bear(String species, double offspringChance, int x, int y) {
         super(species, offspringChance, x, y);
     }

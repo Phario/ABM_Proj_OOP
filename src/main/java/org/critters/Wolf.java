@@ -10,9 +10,22 @@ public class Wolf extends ACritter {
     public int getStaticID(ACritter ID) {
         return critterID;
     }
+
+    /**
+     * Default constructor for Wolf.
+     */
     public Wolf() {
         super("N/A", 0, 0, 0);
     }
+
+    /**
+     * Constructs a Wolf object with the specified species, offspring chance, and position.
+     *
+     * @param species          the species of the wolf
+     * @param offspringChance  the chance of wolf reproduction
+     * @param x                the x-coordinate position of the wolf
+     * @param y                the y-coordinate position of the wolf
+     */
     public Wolf(String species, double offspringChance, int x, int y) {
         super(species, offspringChance, x, y);
     }

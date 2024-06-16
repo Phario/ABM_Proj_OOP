@@ -6,10 +6,19 @@ import java.awt.*;
 import static org.maps.Config.*;
 import static org.maps.Map.map;
 
+/**
+ * The Board class represents the main visual component for the Forest Shenanigans simulation.
+ * It handles the creation of the game window and the rendering of the game map.
+ */
 public class Board extends JPanel {
     public static int cellSize = 10;
+
     private static JFrame frame;
 
+    /**
+     * Initializes and starts the game map by creating a JFrame and adding the Board component to it.
+     * The frame is sized based on the map dimensions and cell size, and is set to be visible.
+     */
     public static void startMap() {
         frame = new JFrame("Forest Shenanigans");
         Board forest = new Board();
@@ -19,6 +28,12 @@ public class Board extends JPanel {
         frame.setVisible(true);
     }
 
+    /**
+     * Overrides the paintComponent method of JPanel to render the game map.
+     * It fills the background with a green color and draws each cell based on the species present.
+     *
+     * @param g the Graphics object used for drawing.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -62,6 +77,11 @@ public class Board extends JPanel {
             }
         }
     }
+
+    /**
+     * Refreshes the frame by repainting it. This method can be called to update the visual representation
+     * of the game map.
+     */
     public static void refreshFrame() {
         frame.repaint();
     }

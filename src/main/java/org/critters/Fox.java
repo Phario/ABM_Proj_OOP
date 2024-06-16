@@ -10,9 +10,22 @@ public class Fox extends ACritter{
     public int getStaticID(ACritter ID) {
         return critterID;
     }
+
+    /**
+     * Default constructor for Fox.
+     */
     public Fox() {
         super("N/A", 0, 0, 0);
     }
+
+    /**
+     * Constructs a Fox object with the specified species, offspring chance, and position.
+     *
+     * @param species          the species of the fox
+     * @param offspringChance  the chance of fox reproduction
+     * @param x                the x-coordinate position of the fox
+     * @param y                the y-coordinate position of the fox
+     */
     public Fox(String species, double offspringChance, int x, int y) {
         super(species, offspringChance, x, y);
     }

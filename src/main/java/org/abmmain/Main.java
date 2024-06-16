@@ -8,8 +8,19 @@ import java.util.List;
 import static org.maps.Config.*;
 import static org.maps.Map.map;
 
+/**
+ * The Main class serves as the entry point for starting and running the simulation.
+ * It initializes the simulation configuration, starts the map visualization, runs the simulation for a specified number of turns,
+ * and finally saves the animal counts history to an Excel file.
+ */
 public class Main {
 
+    /**
+     * The main method initializes and runs the simulation.
+     *
+     * @param args command-line arguments (not used in this application)
+     * @throws InterruptedException if the thread is interrupted while sleeping
+     */
     public static void main(String[] args) throws InterruptedException {
         config();
         Map.startSimulation(mapLength, mapHeight, bearAmount, deerAmount, wolfAmount, hareAmount, foxAmount, berryAmount, burrowAmount);

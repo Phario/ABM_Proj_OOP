@@ -27,7 +27,7 @@ import java.io.File;
 public class Map {
     private static Random random = new Random();
 
-    /** map that contains the instances of ACritter subclasses **/
+    /** Map that contains the instances of ACritter subclasses **/
     public static ACritter[][] map;
 
     /**
@@ -690,10 +690,10 @@ public class Map {
                             if(map[i][j].getAge()>wolfMaxAge){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Berries":
-                            if(map[i][j].getAge()>berryLife){PETAHandler(map[i][j].getCritterID());}
+                            if(map[i][j].getAge()> berryLifeTime){PETAHandler(map[i][j].getCritterID());}
                             break;
                         case "Burrow":
-                            if(map[i][j].getAge()>burrowLife){PETAHandler(map[i][j].getCritterID());}
+                            if(map[i][j].getAge()> burrowLifeTime){PETAHandler(map[i][j].getCritterID());}
                             break;
                         default:
                             break;

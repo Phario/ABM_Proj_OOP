@@ -20,8 +20,8 @@ public class Config {
 
     protected static int ageOfConsent = 6;
     //"Without Rules, We Live With The Animals" - John Wick
-    protected static int burrowLife = 100;
-    protected static int berryLife = 10;
+    protected static int burrowLifeTime = 100;
+    protected static int berryLifeTime = 10;
     //non-movable object lifetimes
 
     public static int mapLength = 80;
@@ -64,6 +64,13 @@ public class Config {
     protected static int hareMaxAge = 90;
     protected static int foxMaxAge = 90;
     protected static int wolfMaxAge = 90;
+
+    /**
+     * Configures the simulation settings based on user input. The method allows for a quick setup
+     * using default values or a detailed setup where each parameter can be customized. The parameters
+     * include hunting chances, food values, object lifetimes, spawn rates, offspring chances, maximum
+     * ages, map dimensions, number of turns, and quantities of various entities.
+     */
     public static void config() {
         Scanner configInput = new Scanner(System.in);
         System.out.println("Quick setup? (true/false)");
@@ -109,9 +116,9 @@ public class Config {
                 //food values for animals
 
                 System.out.println("Enter berry lifetime in number of turns:");
-                berryLife = configInput.nextInt();
+                berryLifeTime = configInput.nextInt();
                 System.out.println("Enter burrow lifetime in number of turns:");
-                burrowLife = configInput.nextInt();
+                burrowLifeTime = configInput.nextInt();
                 //non-movable object lifetime
 
                 System.out.println("Enter burrow spawn chance (in %):");
