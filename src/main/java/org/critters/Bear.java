@@ -16,6 +16,7 @@ public class Bear extends ACritter {
     public Bear(String species, double offspringChance, int x, int y) {
         super(species, offspringChance, x, y);
     }
+
     /**
      * Scans the surrounding 3x3 grid centered on the current object's coordinates
      * (this.x, this.y) within a map. It checks if a specific object (identified by

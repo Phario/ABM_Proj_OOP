@@ -3,10 +3,6 @@ package org.critters;
 import java.util.ArrayList;
 
 public class  Burrows extends ACritter {
-    public void receiveDamage(int dmg) {
-    }
-
-
     public int getStaticID(ACritter ID) {
         return critterID;
     }

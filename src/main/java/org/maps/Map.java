@@ -26,8 +26,9 @@ import java.io.File;
 
 public class Map {
     private static Random random = new Random();
+
+    /** map that contains the instances of ACritter subclasses **/
     public static ACritter[][] map;
-    //map that contains the instances of ACritter subclasses
 
     /**
      * Initializes and starts the ecosystem simulation based on the specified parameters.
@@ -61,6 +62,7 @@ public class Map {
         environmentObjectSpawner("Berries", berryAmount);
         environmentObjectSpawner("Burrow", burrowAmount);
     }
+
     /**
      * Manages the turns of all critters on the map, handling their actions, interactions,
      * and environment changes for each turn cycle.
@@ -116,6 +118,7 @@ public class Map {
         }
         Thread.sleep(turnInterval);
     }
+
     /**
      * Manages the turn-based behavior of a specific critter on the map, including movement,
      * interaction with the environment (other critters and food sources), breeding, aging,
@@ -427,6 +430,7 @@ public class Map {
             }
         }
     }
+
     /**
      * Moves a critter to an adjacent empty cell on the map if available.
      *
@@ -474,6 +478,7 @@ public class Map {
         critter.setY(newY); // Update critter's Y coordinate
         map[newX][newY] = critter; // Place the critter in the new cell
     }
+
     /**
      * Spawns a specified number of environment objects of a given type in random empty positions on the map.
      *
@@ -523,7 +528,6 @@ public class Map {
      * of the corresponding critter class. If the objectType is unknown, it prints an error message
      * and returns null.
      */
-
     private static ACritter createCritter(String objectType, int x, int y) {
         switch (objectType) {
             case "Bear":
@@ -647,7 +651,6 @@ public class Map {
         }
     }
 
-
     /**
      * Ages all the critters and plants on the map by incrementing their age by 1.
      * If any critter or plant exceeds its maximum age, it triggers the PETAHandler method to handle its removal.
@@ -710,14 +713,14 @@ public class Map {
     private static boolean isValid(int x, int y, int rows, int cols) {
         return x >= 0 && x < rows && y >= 0 && y < cols;
     }
+
     /**
      * Retrieves the species name of the critter (object) located at the specified coordinates (x, y) on the map.
      * Input: The x and y coordinate of the map array.
      */
-
     public static String getArrayObjectName(int x, int y) {
         return map[x][y].getSpecies();
-    }//gets an object's name from an array's field and returns it
+    }
 
     /**
      * Retrieves the critter ID (object ID) located at the specified coordinates (x, y) on the map.
@@ -822,8 +825,26 @@ public class Map {
         }
     }
 
-
-
+    /**
+     * Writes the animal counts history to an Excel file and creates a chart to visualize the data.
+     *
+     * @param animalCountsHistory A list of maps where each map contains the counts of different animal species for a turn.
+     *
+     * This method creates a new Excel workbook, adds the animal counts data to a sheet, creates a line chart to visualize the data,
+     * and saves the file with a unique name to avoid overwriting existing files.
+     *
+     * The Excel file includes:
+     * - A sheet named "AnimalCounts" with the animal counts data.
+     * - A line chart visualizing the population of each animal species over time.
+     *
+     * The method performs the following steps:
+     * 1. Creates a new workbook and sheet.
+     * 2. Adds headers for the turn and species names.
+     * 3. Populates the sheet with animal counts data for each turn.
+     * 4. Calls {@link #createChart} to add a line chart to the sheet.
+     * 5. Generates a unique file name to avoid overwriting existing files using {@link #getUniqueFileName}.
+     * 6. Writes the workbook to a file and closes the workbook.
+     */
     public class ExcelWriter {
 
         /**
