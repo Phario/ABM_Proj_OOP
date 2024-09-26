@@ -17,3 +17,6 @@ The forest is populated with 5 different species, each one of them needs to eat.
 
 - Grzegorz Dynak - Leader
 - Jan Izdebski
+
+## Requirements:
+Java 21 or above
